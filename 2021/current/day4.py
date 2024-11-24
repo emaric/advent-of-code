@@ -83,7 +83,7 @@ def part1(input):
                         score = _sum * drawn
                         return score
 
-    return ""
+    return -1
 
 
 def part2(input):
@@ -130,7 +130,7 @@ def part2(input):
                     bingo_boards.remove(board)
                     board_marks.remove(marked_board)
 
-        def sum_unmarked_values(values, markings):
+        def sum_unmarked_values(values: list[list[int]], markings) -> int:
             sum = 0
             for vals, marks in zip(values, markings):
                 for val, mark in zip(vals, marks):
