@@ -21,15 +21,16 @@ from shared.util import (
 logger_init()
 logger_enable(log, "day1")
 
-DAY = 1
+DAY = 3
 
 locations = get_locations(f"day{DAY}")
 
 
-# content = read_input(locations.example_file)
-content = read_input(locations.input_file)
+content = read_input(locations.example_file)
+# content = read_input(locations.input_file)
 
 cl = content.split("\n")
+# cl = cl[3:-4]
 
 for line in cl:
     log.info(line)

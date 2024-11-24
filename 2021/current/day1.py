@@ -30,27 +30,21 @@ locations = get_locations(f"day{DAY}")
 content = read_input(locations.input_file)
 
 cl = content.split("\n")
+# cl = cl[3:-4]
+
+# print(content)
+# print("cl:", cl)
 
 
-def part1(cl):
-    count_increase = 0
-    for i, cur in enumerate(cl):
-        prev = cl[i - 1] if i > 0 else None
-        if prev and (int(cur) - int(prev)) > 0:
-            count_increase += 1
-    print(count_increase)
+def part1(ar):
+    return sum([(1 if pair[1] > pair[0] else 0) for pair in zip(ar, ar[1:])])
 
 
-part2cl = []
-start = False
-for i, cur in enumerate(cl):
-    prev1 = cl[i - 1] if i > 0 else None
-    prev2 = cl[i - 2] if i > 0 else None
-    if prev2 == cl[0]:
-        start = True
-    if start:
-        _sum = sum([int(prev2), int(prev1), int(cur)])
-        part2cl.append(_sum)
-        print(prev2, prev1, cur, _sum)
+def part2(ar):
+    summed_triplets = [sum(triplet) for triplet in zip(ar, ar[1:], ar[2:])]
+    return part1(summed_triplets)
 
-part1(part2cl)
+
+input = [int(x) for x in cl]
+print("part1", part1(input))
+print("part2", part2(input))
