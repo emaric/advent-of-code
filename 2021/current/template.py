@@ -21,9 +21,9 @@ from shared.util import (
 )
 
 logger_init()
-logger_enable(log, "day3")
+logger_enable(log, "day4")
 
-DAY = 3
+DAY = 4
 
 locations = get_locations(f"day{DAY}")
 
@@ -35,22 +35,13 @@ cl = content.split("\n")
 
 
 def part1(input):
-    def _most_common_bit_in_position():
-        return 0
-
-    def _least_common_bit_in_position():
-        return 0
-
-    gamma_rate = _most_common_bit_in_position()
-    epsilon_rate = _least_common_bit_in_position()
-    consumption = gamma_rate * epsilon_rate
-    return consumption
+    return input
 
 
 def part2(input):
     return input
 
 
-input = cl[3:-4]
+input = cl
 print("part1", part1(input))
 print("part2", part2(input))
