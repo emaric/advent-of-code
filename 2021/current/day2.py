@@ -28,40 +28,42 @@ DAY = 2
 locations = get_locations(f"day{DAY}")
 
 
-# content = read_input(locations.example_file)
-content = read_input(locations.input_file)
+content = read_input(locations.example_file)
+# content = read_input(locations.input_file)
 
 cl = content.split("\n")
 
-"""
-horizontal = 0
-depth = 0
 
-for line in cl:
-    command = strs(line)[0]
-    steps = ints(line)[0][0]
-    if command == "forward":
-        horizontal += int(steps)
-    elif command == "down":
-        depth += int(steps)
-    else:
-        depth -= steps
+def part1(steps):
+    horizontal = 0
+    depth = 0
+    for step, value in steps:
+        if step == "forward":
+            horizontal += value
+        if step == "down":
+            depth += value
+        if step == "up":
+            depth -= value
+    return horizontal * depth
 
-print(horizontal * depth)
-"""
-horizontal = 0
-depth = 0
-aim = 0
 
-for line in cl:
-    command = strs(line)[0]
-    steps = ints(line)[0][0]
-    if command == "forward":
-        horizontal += steps
-        depth += aim * steps
-    elif command == "down":
-        aim += steps
-    else:
-        aim -= steps
+def part2(steps):
+    horizontal = 0
+    depth = 0
+    aim = 0
+    for step, value in steps:
+        if step == "down":
+            aim += value
+        if step == "up":
+            aim -= value
+        if step == "forward":
+            horizontal += value
+            depth += aim * value
+    return depth * horizontal
 
-print(horizontal * depth)
+
+cl = cl[3:-4]
+input = [[i for i in line.split(" ")] for line in cl]
+input = [[line[0], int(line[1])] for line in input]
+print("part1", part1(input))
+print("part2", part2(input))
