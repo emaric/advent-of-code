@@ -20,10 +20,10 @@ from shared.util import (
     wait_for_input,
 )
 
-logger_init()
-logger_enable(log, "day4")
-
 DAY = 4
+
+logger_init()
+logger_enable(log, f"day{DAY}")
 
 locations = get_locations(f"day{DAY}")
 
@@ -32,6 +32,7 @@ content = read_input(locations.example_file)
 # content = read_input(locations.input_file)
 
 cl = content.split("\n")
+cl = cl[3:-4]
 
 
 def part1(input):
