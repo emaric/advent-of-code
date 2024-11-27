@@ -27,11 +27,11 @@ logger_enable(log, f"day{DAY}")
 locations = get_locations(f"day{DAY}")
 
 
-# content = read_input(locations.example_file)
-content = read_input(locations.input_file)
+content = read_input(locations.example_file)
+# content = read_input(locations.input_file)
 
 cl = content.split("\n")
-# cl = cl[3:-4]
+cl = cl[3:-4]
 
 
 def part1(input):
@@ -170,6 +170,8 @@ def part2(input):
 
     # for h_line in grid:
     # print(h_line)
+
+    print_array(grid)
 
     intersections = 0
     for h_line in grid:
