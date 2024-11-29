@@ -157,5 +157,5 @@ def part2(input):
 
 
 input = cl
-# print("part1", part1(input))
+print("part1", part1(input))
 print("part2", part2(input))
