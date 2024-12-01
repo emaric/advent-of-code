@@ -64,7 +64,7 @@ def part2v2(input):
 
 
 @timer
-def part2_by_4hpq():
+def part1and2_by_4hpq():
     data = [*map(int, open(locations.input_file).read().split())]
     A, B = sorted(data[0::2]), Counter(data[1::2])
     print(sum(map(lambda a, b: abs(a - b), A, B)), sum(a * B[a] for a in A))
@@ -75,4 +75,4 @@ print("part1", part1(input))
 
 print("part2", part2(input))
 print("part2v2", part2v2(input))
-print("_", part2_by_4hpq())
+print("_", part1and2_by_4hpq())
