@@ -156,6 +156,12 @@ def part2(input):
     return output_value_sum
 
 
+def part2v2(input):
+    # get the new value of each segment [a, b, c, d, e, f, g]
+
+    pass
+
+
 input = cl
 print("part1", part1(input))
 print("part2", part2(input))
