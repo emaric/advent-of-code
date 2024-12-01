@@ -63,8 +63,16 @@ def part2v2(input):
     return sum([l * counter[l] for l in left])
 
 
+@timer
+def part2_by_4hpq():
+    data = [*map(int, open(locations.input_file).read().split())]
+    A, B = sorted(data[0::2]), sorted(data[1::2])
+    print(sum(map(lambda a, b: abs(a - b), A, B)), sum(a * B.count(a) for a in A))
+
+
 input = cl
 print("part1", part1(input))
 
 print("part2", part2(input))
 print("part2v2", part2v2(input))
+print("_", part2_by_4hpq())
