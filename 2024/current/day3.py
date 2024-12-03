@@ -45,11 +45,24 @@ def part1(input):
     return ans
 
 
+@timer
 def part2(input):
-    return input
+    matches = re.findall(r"(mul\((\d+),(\d+)\)|do\(\)|don't\(\))", input)
+    _do = True
+    ans = 0
+    for match in matches:
+        command = match[0][:3]
+        if command == "don":
+            _do = False
+        elif command == "do(":
+            _do = True
+        if _do and command == "mul":
+            print(match[0])
+            ans += int(match[1]) * int(match[2])
+    return ans
 
 
 input = cl
 input = content
 print("part1", part1(input))
-# print("part2", part2(input))
+print("part2", part2(input))
