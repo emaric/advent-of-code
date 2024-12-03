@@ -37,9 +37,6 @@ cl = content.split("\n")
 # cl = cl[3:-4]
 
 
-indices = []
-
-
 @timer
 def part1(input):
     count = 0
@@ -57,9 +54,6 @@ def part1(input):
             )
             if is_all_decreasing_or_increasing:
                 count += 1 if len(set(level_diffs) - valid_diff) == 0 else 0
-                indices.append(i)
-    print(indices)
-
     return count
 
 
@@ -91,7 +85,7 @@ def part2(input):
             and (not is_decreasing)
         )
 
-    for line, i in zip(input, range(len(input))):
+    for line in input:
         levels = list(map(int, line.split(" ")))
         unsafe_sequences = []
 
@@ -103,28 +97,19 @@ def part2(input):
                 unsafe_sequences.append([a, b, c])
                 if unsafe_sequences_count() > 2:
                     break
-        # if is_arr_safe(levels):
         if unsafe_sequences_count() == 0:
             count += 1
         else:
-            # test = [a - b for a, b in zip(levels, levels[1:])]
-            # if is_arr_safe(levels[1:]) or is_arr_safe(levels[:-1]):
-            #     count += 1
             if unsafe_sequences_count() == 1:
                 if is_arr_safe(levels[1:]) or is_arr_safe(levels[:-1]):
                     count += 1
-                    # print("safe", levels, test)
-                    pass
-            #     else:
-            #         # print("unsafe", levels, test)
-            #         pass
             elif unsafe_sequences_count() == 2:
-                # print(set(test) - decreasing_diffs, set(test) - increasing_diffs)
-                for _i in range(len(levels)):
-                    if is_arr_safe([levels[_] for _ in range(len(levels)) if _ != _i]):
+                for index_to_exclude in range(len(levels)):
+                    if is_arr_safe(
+                        [levels[i] for i in range(len(levels)) if i != index_to_exclude]
+                    ):
                         count += 1
                         break
-                pass
 
     return count
 
