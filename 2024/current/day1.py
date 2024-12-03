@@ -72,7 +72,9 @@ def part1and2_by_4hpq():
 
 input = cl
 print("part1", part1(input))
-
+print()
 print("part2", part2(input))
+print()
 print("part2v2", part2v2(input))
+print()
 print("_", part1and2_by_4hpq())
