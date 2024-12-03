@@ -57,7 +57,6 @@ def part2(input):
         elif command == "do(":
             _do = True
         if _do and command == "mul":
-            print(match[0])
             ans += int(match[1]) * int(match[2])
     return ans
 
