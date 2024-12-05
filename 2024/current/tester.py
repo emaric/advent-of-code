@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from functools import reduce
 from pprint import pprint
 
+from shared.decorators import timer
 from shared.helpers import Grid, Point, Vectors, get_locations, read_input
 from shared.util import (
     extend_list,
@@ -20,7 +21,7 @@ from shared.util import (
     wait_for_input,
 )
 
-DAY = 1
+DAY = 0
 
 logger_init()
 logger_enable(log, f"day{DAY}")
@@ -35,10 +36,12 @@ cl = content.split("\n")
 cl = cl[3:-4]
 
 
+@timer
 def part1(input):
     return input
 
 
+@timer
 def part2(input):
     return input
 
