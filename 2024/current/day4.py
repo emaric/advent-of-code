@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from functools import reduce
 from pprint import pprint
 
+from shared.decorators import timer
 from shared.helpers import Grid, Point, Vectors, get_locations, read_input
 from shared.util import (
     extend_list,
@@ -35,6 +36,7 @@ cl = content.split("\n")
 # cl = cl[3:-4]
 
 
+@timer
 def part1(input):
     count = 0
     patterns = [r"XMAS", r"SAMX"]
@@ -142,8 +144,34 @@ def part1(input):
     return count
 
 
+@timer
 def part2(input):
-    return ""
+    count = 0
+    pattern = "MAS"
+    mid = int(len(pattern) / 2)
+    mid_letter = pattern[mid]
+    for y in range(mid, len(input) - 1):
+        # print("y:", y)
+        for x in range(mid, len(input[0]) - 1):
+            if input[y][x] == mid_letter:
+                ldr = [
+                    input[_y][_x]
+                    for _y, _x in zip(range(y - 1, y + 2), range(x - 1, x + 2))
+                ]  # input[y - 1][x - 1], input[y][x], input[y+1][x+1]
+                # lur = # input[y + 1][x - 1]
+                lur = [
+                    input[_y][_x]
+                    for _y, _x in zip(range(y + 1, y - 2, -1), range(x - 1, x + 2))
+                ]  # input[y - 1][x - 1], input[y][x], input[y+1][x+1]
+                ldr_str = "".join(ldr)
+                lur_str = "".join(lur)
+                if (ldr_str == pattern or ldr_str == pattern[::-1]) and (
+                    lur_str == pattern or lur_str == pattern[::-1]
+                ):
+                    # print(ldr, lur)
+                    count += 1
+
+    return count
 
 
 input = cl
