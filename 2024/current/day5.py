@@ -118,6 +118,37 @@ def part2(input):
     return mid_pages_sum
 
 
+class Page:
+    n: int
+    rules: []  # type: ignore
+
+    def __init__(self, n, rules):
+        self.n = n
+        self.rules = rules
+
+    def __lt__(self, other):
+        for x, y in self.rules:
+            if x == other.n and y == self.n:
+                return False
+        return True
+
+    def __str__(self):
+        return str(self.n)
+
+
+@timer
+def part2v2(input):
+    mid_pages_sum = 0
+    rules, updates = input
+
+    for pages in updates:
+        if not _is_correctly_ordered(rules, pages):
+            corrected = sorted([Page(page, rules[page]) for page in pages])
+            mid_pages_sum += corrected[int(len(corrected) / 2)].n
+
+    return mid_pages_sum
+
+
 input = cl
 rules = input[: input.index("")]
 rules = [list(map(int, rule.split("|"))) for rule in rules]
@@ -135,8 +166,12 @@ rules = rules_dict
 updates = input[input.index("") + 1 :]
 updates = [list(map(int, update.split(","))) for update in updates]
 input = [rules, updates]
+
 print("part1", part1(input))
 
 # failed: 4917 -> answer is too low
 # failed: 4946 -> answer is too low
 print("part2", part2(input))
+
+
+print("part2v2", part2v2(input))
