@@ -36,34 +36,6 @@ cl = content.split("\n")
 # cl = cl[3:-4]
 
 
-@timer
-def part1(input):
-    mid_pages_sum = 0
-    rules, updates = input
-
-    def _is_correctly_ordered(_rules, _pages):
-        relevant_rules = []
-        for page in _pages:
-            relevant_rules.append(_rules[page])
-
-        # print(pages, "relevant rules:", relevant_rules)
-        for rules in relevant_rules:
-            for x, y in rules:
-                if x in pages and y in pages:
-                    x_index = pages.index(x)
-                    y_index = pages.index(y)
-                    if x_index > y_index:
-                        return False
-        return True
-
-    for pages in updates:
-        if _is_correctly_ordered(rules, pages):
-            mid = pages[int(len(pages) / 2)]
-            mid_pages_sum += mid
-
-    return mid_pages_sum
-
-
 def _sort(arr, comparator):
     if len(arr) > 1:
         if len(arr) > 2:
@@ -98,25 +70,39 @@ def _sort(arr, comparator):
         return arr
 
 
+def _is_correctly_ordered(_rules, _pages):
+    relevant_rules = []
+    for page in _pages:
+        relevant_rules.append(_rules[page])
+
+    # print(pages, "relevant rules:", relevant_rules)
+    for rules in relevant_rules:
+        for x, y in rules:
+            if x in _pages and y in _pages:
+                x_index = _pages.index(x)
+                y_index = _pages.index(y)
+                if x_index > y_index:
+                    return False
+    return True
+
+
+@timer
+def part1(input):
+    mid_pages_sum = 0
+    rules, updates = input
+
+    for pages in updates:
+        if _is_correctly_ordered(rules, pages):
+            mid = pages[int(len(pages) / 2)]
+            mid_pages_sum += mid
+
+    return mid_pages_sum
+
+
 @timer
 def part2(input):
     mid_pages_sum = 0
     rules, updates = input
-
-    def _is_correctly_ordered(_rules, _pages):
-        relevant_rules = []
-        for page in _pages:
-            relevant_rules.append(_rules[page])
-
-        # print(pages, "relevant rules:", relevant_rules)
-        for rules in relevant_rules:
-            for x, y in rules:
-                if x in pages and y in pages:
-                    x_index = pages.index(x)
-                    y_index = pages.index(y)
-                    if x_index > y_index:
-                        return False
-        return True
 
     def _is_printed_before_target(page, target):
         for x, y in rules[page]:
