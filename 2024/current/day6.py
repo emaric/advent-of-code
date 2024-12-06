@@ -126,16 +126,7 @@ class GuardMap:
 @timer
 def part1(input):
     visits = GuardMap(input).get_visits()
-    test_input = [[line[i] for i in range(len(line))] for line in input]
-    for v in visits:
-        test_input[v.y][v.x] = "X"
-
-    test = 0
-    for l in test_input:
-        l.count("X")
-        test += l.count("X")
-        print("".join(l))
-    return test
+    return len(visits)
 
 
 @timer
