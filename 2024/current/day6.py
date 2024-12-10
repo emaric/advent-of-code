@@ -1,6 +1,6 @@
 import math
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import reduce
@@ -30,11 +30,12 @@ logger_enable(log, f"day{DAY}")
 locations = get_locations(f"day{DAY}")
 
 
-# content = read_input(locations.example_file)
-content = read_input(locations.input_file)
+example_content = read_input(locations.example_file)
+example_cl = example_content.split("\n")
+example_cl = example_cl[3:-4]
 
+content = read_input(locations.input_file)
 cl = content.split("\n")
-# cl = cl[3:-4]
 
 
 class Steps(Enum):
@@ -47,16 +48,16 @@ class Steps(Enum):
 class GuardMap:
     OBSTACLE_MARK = "#"
 
-    grid_map = []
     width: int
     height: int
 
     starting_point: Point
-    obstacles = []
     next_step: Steps
-    all_points = []
 
     def __init__(self, input):
+        self.obstacles = []
+        self.all_points = []
+        self.grid_map = []
         self.width = len(input[0])
         self.height = len(input)
         for y in range(self.height):
@@ -98,7 +99,7 @@ class GuardMap:
         return x >= 0 and y >= 0 and x < self.width and y < self.height
 
     def get_visits(self):
-        visits = set()
+        visits = []
 
         p = self.starting_point
         next_step = self.next_step
@@ -108,7 +109,7 @@ class GuardMap:
         while True:
             while p not in self.obstacles and self._is_in_range(p):
                 # test_input[p.y][p.x] = "X"
-                visits.add(p)
+                visits.append(p)
                 p += next_step.value
 
             # for test_line in test_input:
@@ -122,23 +123,172 @@ class GuardMap:
 
         return visits
 
+    def get_visits_direction_map(self):
+        visits_direction_map: dict[str:set] = defaultdict(set)
+
+        position = self.starting_point
+        next_step = self.next_step
+
+        test_input = [[line[i] for i in range(len(line))] for line in self.grid_map]
+
+        def _print():
+            for test_line in test_input:
+                print("".join(test_line))
+
+        # move to the next step
+        while True:
+            # for debug:
+            if test_input[position.y][position.x] == ".":
+                test_input[position.y][position.x] = next_step.name
+
+            visits_direction_map[next_step.name].add(position)
+
+            next_position = position + next_step.value
+            if not self._is_in_range(next_position):
+                break
+
+            # turn right if the next position is an obstacle
+            if next_position in self.obstacles:
+                next_step = self._get_right_turn_step(next_step)
+            # else:
+            #     right_step = self._get_right_turn_step(next_step)
+            #     right_position = position + right_step.value
+            #     if self._is_creates_a_loop(
+            #         right_position, right_step, visits_direction_map
+            #     ):
+            #         obstraction_points.add(next_position)
+            #         # for debug:
+            #         test_input[next_position.y][next_position.x] = "O"
+            else:
+                position += next_step.value
+
+        return visits_direction_map
+
+    def get_obstruction_positions(self):
+        obstraction_points = set()
+        visits_direction_map = self.get_visits_direction_map()
+        visited = defaultdict(set)
+        visited_test = self.get_visits()
+        visited_arr = []
+
+        position = self.starting_point
+        next_step = self.next_step
+
+        test_input = [[line[i] for i in range(len(line))] for line in self.grid_map]
+
+        def _print():
+            for test_line in test_input:
+                print("".join(test_line))
+
+        # move to the next step
+        while True:
+            # for debug:
+            if test_input[position.y][position.x] == ".":
+                test_input[position.y][position.x] = next_step.name
+
+            visited[next_step.name].add(position)
+            visited_arr.append(position)
+
+            next_position = position + next_step.value
+            if not self._is_in_range(next_position):
+                break
+            # turn right if the next position is an obstacle
+            if next_position in self.obstacles:
+                next_step = self._get_right_turn_step(next_step)
+            else:
+                right_step = self._get_right_turn_step(next_step)
+                right_position = position + right_step.value
+                if (
+                    # and right_position in visits_direction_map[right_step.name]
+                    # and right_position in visited_test
+                    next_position not in visited_arr
+                    and self._is_creates_a_loop(position, right_step, visited)
+                ):
+                    obstraction_points.add(next_position)
+                    # for debug:
+                    test_input[next_position.y][next_position.x] = "O"
+                    _print()
+                    print()
+
+                position += next_step.value
+
+        _print()
+        return len(obstraction_points)
+
+    def _is_creates_a_loop(self, start, starting_step, visited_map):
+        # returns True if moving in next_step creates a loop or visits the point in the same direction twice
+        # returns False if visited map is empty or the the position is out of the map
+        # if len(visited_map) < 4:
+        #     return False
+
+        test_input = [[line[i] for i in range(len(line))] for line in self.grid_map]
+
+        def _print():
+            print("-----")
+            for test_line in test_input:
+                print("".join(test_line))
+            print("-----")
+
+        position = start
+        next_step = starting_step
+        visited = defaultdict(set)
+        while True:
+            if not self._is_in_range(position):
+                return False
+
+            if position in visited[next_step.name]:
+                _print()
+                return True
+
+            if position in visited_map[next_step.name]:
+                _print()
+                return True
+
+            if test_input[position.y][position.x] == ".":
+                test_input[position.y][position.x] = next_step.name
+
+            visited[next_step.name].add(position)
+            next_position = position + next_step.value
+            if next_position in self.obstacles:
+                next_step = self._get_right_turn_step(next_step)
+            else:
+                position += next_step.value
+
+        return False
+
 
 @timer
 def part1(input):
     visits = GuardMap(input).get_visits()
-    return len(visits)
+    return len(set(visits))
 
 
 @timer
-def part2(input):
-    return ""
+def part2(_input):
+    return GuardMap(_input).get_obstruction_positions()
 
 
+example_input = example_cl
 input = cl
 
 print()
 # failed: 5085 is too low
-print("part1", part1(input))
+# print("part1", part1(input))
 
+print("part2 (example):", part2(example_input))
 print()
+# failed: 1884 is too high
+# failed: 491 is too low
+# failed: 721 is too low
+# failed: 889
+# failed: 745
+# failed: 781
+# failed: 813
+# failed: 774
+# failed: 1251
+# failed: 1819
+# failed: 1862
+# failed: 1867
+# failed: 1725
+# failed: 1738
 print("part2", part2(input))
