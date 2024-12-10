@@ -29,11 +29,12 @@ logger_enable(log, f"day{DAY}")
 locations = get_locations(f"day{DAY}")
 
 
-content = read_input(locations.example_file)
-# content = read_input(locations.input_file)
+example_content = read_input(locations.example_file)
+example_cl = example_content.split("\n")
+example_cl = example_cl[3:-4]
 
+content = read_input(locations.input_file)
 cl = content.split("\n")
-cl = cl[3:-4]
 
 
 @timer
@@ -45,6 +46,10 @@ def part1(input):
 def part2(input):
     return input
 
+
+example_input = example_cl
+print("part1 (example)", part1(example_input))
+print("part2 (example)", part2(example_input))
 
 input = cl
 print("part1", part1(input))
