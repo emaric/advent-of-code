@@ -48,7 +48,7 @@ def parse_input_str(input_str):
     return parsed_input
 
 
-def create_permutations(length, operators=["*", "+"]):
+def create_cartesian_product(length, operators=["*", "+"]):
     return list(itertools.product(operators, repeat=length))
 
 
@@ -59,7 +59,7 @@ def part1(input):
     for line in input:
         sub_total, nums = line
 
-        operators_perm = create_permutations(len(nums) - 1)
+        operators_perm = create_cartesian_product(len(nums) - 1)
         for operators in operators_perm:
             _sub_total = nums[0]
             for num, operator in zip(nums[1:], operators):
@@ -81,7 +81,7 @@ def part2(input):
     for line in input:
         sub_total, nums = line
 
-        operators_perm = create_permutations(len(nums) - 1, ["*", "+", "||"])
+        operators_perm = create_cartesian_product(len(nums) - 1, ["*", "+", "||"])
         for operators in operators_perm:
             _sub_total = nums[0]
             for num, operator in zip(nums[1:], operators):
