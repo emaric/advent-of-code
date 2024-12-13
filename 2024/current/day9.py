@@ -53,35 +53,40 @@ def part1(input):
         file_i,
         file,
     ) in enumerate(files):
-        if end:
-            break
+        for _1 in range(file):
+            if not end:
+                out[i] = file_i
+                i += 1
+                if i >= len(out):
+                    end = True
 
-        for _ in range(file):
-            out[i] = file_i
-            i += 1
-            if i >= len(out):
-                end = True
-                break
+            if end:
+                remaining_files.append(file_i)
 
-        if end:
-            break
+        if not end:
+            for _2 in range(free[file_i]):
+                out[i] = -1
+                i += 1
+                if i >= len(out):
+                    end = True
+                    break
 
-        for _ in range(free[file_i]):
-            out[i] = -1
-            i += 1
-            if i >= len(out):
-                end = True
-                break
-        # i += free[file_i]
-        # if i >= len(out):
-        #     break
-    print("out", out)
-    return input
+    rl_i = -1
+    for out_i, out_v in enumerate(out):
+        if out_v < 0:
+            out[out_i] = remaining_files[rl_i]
+            rl_i -= 1
+
+    checksum = 0
+    for out_i, out_v in enumerate(out):
+        checksum += out_i * out_v
+
+    return checksum
 
 
 @timer
 def part2(input):
-    return input
+    return ""
 
 
 print()
