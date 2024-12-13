@@ -42,9 +42,7 @@ def part1(input):
     arr = list(map(int, input))
     files = arr[::2]
     free = arr[1::2]
-    print("files", files, "sum", sum(files))
-    print("free", free, "sum", sum(free))
-    out = [0 for _ in range(sum(files))]
+    out = [-1 for _ in range(sum(files))]
 
     i = 0
     end = False
@@ -64,12 +62,9 @@ def part1(input):
                 remaining_files.append(file_i)
 
         if not end:
-            for _2 in range(free[file_i]):
-                out[i] = -1
-                i += 1
-                if i >= len(out):
-                    end = True
-                    break
+            i += free[file_i]
+            if i >= len(out):
+                end = True
 
     rl_i = -1
     for out_i, out_v in enumerate(out):
