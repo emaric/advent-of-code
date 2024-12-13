@@ -7,7 +7,7 @@ from itertools import combinations, permutations
 from pprint import pprint
 
 from shared.decorators import timer
-from shared.helpers import Grid, Point, Vectors, get_locations, read_input
+from shared.helpers import Point, Vectors, get_locations, read_input
 from shared.util import (
     extend_list,
     extend_list_2D,
