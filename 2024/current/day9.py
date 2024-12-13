@@ -100,7 +100,7 @@ def part2(input):
     out_size = sum(files) + sum(free)
     out = [0 for _ in range(out_size)]
 
-    free_spaces: list(Space) = []
+    free_spaces: list[Space] = []
     starting_i_files = []
 
     i = 0
@@ -123,7 +123,6 @@ def part2(input):
             if free_space.size >= file_size:
                 if starting_i < free_space.starting_index:
                     break
-                # print(free_space, starting_i)
                 out[starting_i]
                 value = out[starting_i]
                 for i in range(file_size):
