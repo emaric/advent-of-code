@@ -47,10 +47,12 @@ def part2(input):
     return input
 
 
+print()
 example_input = example_cl
 print("part1 (example)", part1(example_input))
 print("part2 (example)", part2(example_input))
 
+print()
 input = cl
 print("part1", part1(input))
 print("part2", part2(input))
