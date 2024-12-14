@@ -87,6 +87,14 @@ class Point:
     x: int
     y: int
 
+    @property
+    def row(self) -> int:
+        return self.y
+
+    @property
+    def col(self) -> int:
+        return self.x
+
     def __add__(self, other: Point):
         return Point(self.x + other.x, self.y + other.y)
 

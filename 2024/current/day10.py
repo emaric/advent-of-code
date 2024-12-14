@@ -25,7 +25,7 @@ from shared.util import (
     wait_for_input,
 )
 
-DAY = 0
+DAY = 10
 
 logger_init()
 logger_enable(log, f"day{DAY}")
