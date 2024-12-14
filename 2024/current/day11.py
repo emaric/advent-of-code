@@ -100,6 +100,7 @@ def part2(input):
     return s.count_stones_after_blinks(75)
 
 
+print("Solution by Vinh <3")
 print("------------------------------------------------------------")
 print("EXAMPLE INPUT")
 print("------------------------------------------------------------")
