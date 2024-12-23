@@ -220,8 +220,6 @@ class Map:
                 if visited[pos] > 4 and (
                     grid[pos] == "+" or grid[pos] == str(next_dir)
                 ):
-                    for key in visited.keys():
-                        self.g_with_infinite_loops[key] = grid[key]
                     return True
 
                 if grid[pos] != "." and grid[pos] != str(next_dir):
