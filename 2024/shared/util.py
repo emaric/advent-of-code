@@ -446,3 +446,9 @@ def text2int(textnum, numwords={}):
             current = 0
 
     return result + current
+
+
+def clear_print():
+    """Clears the terminal and prints the current time"""
+    os.system("cls" if os.name == "nt" else "clear")
+    return
