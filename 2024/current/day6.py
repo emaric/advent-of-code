@@ -126,8 +126,6 @@ class Map:
                     char = "."
                 self.g[Point(col, row)] = char
 
-        self.g_with_infinite_loops = deepcopy(self.g)
-
     def print(self, grid=None):
         if grid is None:
             grid = self.g
@@ -219,10 +217,8 @@ class Map:
                 grid[pos] = "+"
             else:
                 visited[pos] += 1
-                if visited[pos] > 2 and (
-                    grid[pos] == "+"
-                    or grid[pos] == str(next_dir)
-                    or self.g_with_infinite_loops[pos] == str(object=next_dir)
+                if visited[pos] > 4 and (
+                    grid[pos] == "+" or grid[pos] == str(next_dir)
                 ):
                     for key in visited.keys():
                         self.g_with_infinite_loops[key] = grid[key]
