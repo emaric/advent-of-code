@@ -81,7 +81,7 @@ def test_day{day}example():
     """
     if not Path(test_fpath).exists():
         with open(test_fpath, "w") as f:
-            f.write(content)
+            f.write(content.strip())
 
     # Generate solution script
     solution_fpath = f"solutions\\day{day}.py"
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     """
     if not Path(solution_fpath).exists():
         with open(solution_fpath, mode="w") as f:
-            f.write(solution_content)
+            f.write(solution_content.strip())
 
 
 def submit_solution():
@@ -126,6 +126,7 @@ def submit_solution():
 
 
 def record_run_result(
+    year: int,
     day: int,
     part: int,
     result_time: float,
@@ -135,7 +136,7 @@ def record_run_result(
 ):
     with open(f"solutions\\day{day}.py", "r") as f:
         code = f.read()
-        db.create_record(day, part, result_time, timestamp, comment, person, code)
+        db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
 def run(day: int, part: int):

@@ -6,13 +6,14 @@ import aoc_service as a
 
 
 def main():
-    date = datetime(year=2024, month=12, day=1)
+    date = datetime(year=2025, month=12, day=1)
     run("11", "31", date, "test run", True)
 
 
 def run(
     expected_a, expected_b, date=datetime.now(), comment="", record_run_result=False
 ):
+    year = date.year
     day = date.day
 
     a.download(date)
@@ -25,8 +26,8 @@ def run(
         assert expected_a == actual_a
         assert expected_b == actual_b
         if record_run_result:
-            a.record_run_result(day, 1, result_time_a, comment)
-            a.record_run_result(day, 2, result_time_b, comment)
+            a.record_run_result(year, day, 1, result_time_a, comment)
+            a.record_run_result(year, day, 2, result_time_b, comment)
 
 
 if __name__ == "__main__":
