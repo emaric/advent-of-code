@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "advent-of-code-data>=2.1.0",
+    "pymongo[srv]>=4.15.4",
     "pytest>=9.0.1",
 ]
 

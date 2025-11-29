@@ -1,9 +1,15 @@
+import importlib
 import os
 import re
 import subprocess
+import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+
+import db
+
+PERSON = "m"
 
 
 def download(current_date=datetime.now()):
@@ -54,7 +60,7 @@ def generate_scripts(date=datetime.now()):
 from aoc_service import parse_example
 from solutions import day{day}
 
-example_input = "inputs\\day{day}example.txt"
+example_input = "inputs\\\\day{day}example.txt"
 
 
 def test_day{day}example():
@@ -85,6 +91,16 @@ def solution(input):
     answer_b = "-"
 
     return answer_a, answer_b
+
+
+def main():
+    answer = "-"
+    return answer
+
+
+if __name__ == "__main__":
+    main()
+
     """
     if not Path(solution_fpath).exists():
         with open(solution_fpath, mode="w") as f:
@@ -95,12 +111,32 @@ def submit_solution():
     pass
 
 
-def submit_results_to_db():
-    pass
+def record_run_result(
+    day: int,
+    result_time: float,
+    comment: str = "",
+    person=PERSON,
+    timestamp: datetime = datetime.now(),
+):
+    with open(f"solutions\\day{day}.py", "r") as f:
+        code = f.read()
+        db.create_record(day, result_time, timestamp, comment, person, code)
 
 
-def run(solution_file):
-    pass
+def run(day: int):
+    try:
+        module = importlib.import_module(f"solutions.day{day}")
+        main_func = getattr(module, "main")
+        start = time.perf_counter()
+        answer = main_func()
+        end = time.perf_counter()
+        result_time = end - start
+        print(f"day{day} answer: {answer}, time: {result_time:.4f} seconds")
+        return answer, result_time
+    except ImportError as e:
+        print(f"Error importing module: {e}")
+    except AttributeError:
+        print("Module imported but 'main' function not found")
 
 
 def parse_example(day: int):
