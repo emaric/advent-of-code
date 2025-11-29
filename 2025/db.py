@@ -35,6 +35,7 @@ def create_record(day, result_time, timestamp, comment, person, code):
             timestamp=timestamp,
             person=person,
             code=code,
+            comment=comment,
         )
         inserted = collection.insert_one(record)
         return inserted.inserted_id
