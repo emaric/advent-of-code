@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "Debug Script",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "main",
+      "console": "integratedTerminal",
+      "args": [
+        "--file",
+        "${relativeFile}"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder},${workspaceFolder}/shared"
+      },
+      "envFile": "${workspaceFolder}/.env",
+      "justMyCode": true
+    },
+    {
+      "name": "Python Debugger: pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder},${workspaceFolder}/shared"
+      },
+    }
+  ]
+}
