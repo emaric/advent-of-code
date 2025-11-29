@@ -25,7 +25,7 @@ finally:
     client.close()
 
 
-def create_record(day, result_time, timestamp, comment, person, code):
+def create_record(day, part, result_time, timestamp, comment, person, code):
     client = init_client()
     try:
         collection = client.aoc.records
@@ -36,6 +36,7 @@ def create_record(day, result_time, timestamp, comment, person, code):
             person=person,
             code=code,
             comment=comment,
+            part=part,
         )
         inserted = collection.insert_one(record)
         return inserted.inserted_id
@@ -50,3 +51,4 @@ class Record(TypedDict):
     person: str
     comment: str
     code: str
+    part: int

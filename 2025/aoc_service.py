@@ -87,20 +87,34 @@ def test_day{day}example():
     solution_fpath = f"solutions\\day{day}.py"
     solution_content = """
 def solution(input):
-    answer_a = "-"
-    answer_b = "-"
+    answer_a = part_one(input)
+    answer_b = part_two(input)
 
     return answer_a, answer_b
 
 
-def main():
-    answer = "-"
-    return answer
+def part_one(input):
+    return "-"
+
+
+def part_two(input):
+    return "-"
+
+
+def main(part=1):
+    with open("inputs\\\\day1.txt", "r") as f:
+        input = f.read()
+
+    if part == 1:
+        return part_one(input)
+    elif part == 2:
+        return part_two(input)
+    else:
+        raise Exception("Not implemented.")
 
 
 if __name__ == "__main__":
     main()
-
     """
     if not Path(solution_fpath).exists():
         with open(solution_fpath, mode="w") as f:
@@ -113,6 +127,7 @@ def submit_solution():
 
 def record_run_result(
     day: int,
+    part: int,
     result_time: float,
     comment: str = "",
     person=PERSON,
@@ -120,18 +135,18 @@ def record_run_result(
 ):
     with open(f"solutions\\day{day}.py", "r") as f:
         code = f.read()
-        db.create_record(day, result_time, timestamp, comment, person, code)
+        db.create_record(day, part, result_time, timestamp, comment, person, code)
 
 
-def run(day: int):
+def run(day: int, part: int):
     try:
         module = importlib.import_module(f"solutions.day{day}")
         main_func = getattr(module, "main")
         start = time.perf_counter()
-        answer = main_func()
+        answer = main_func(part)
         end = time.perf_counter()
         result_time = end - start
-        print(f"day{day} answer: {answer}, time: {result_time:.4f} seconds")
+        print(f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds")
         return answer, result_time
     except ImportError as e:
         print(f"Error importing module: {e}")
