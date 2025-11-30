@@ -6,9 +6,9 @@ import aoc_service as a
 
 
 def main():
-    date = datetime(year=2023, month=12, day=2)
+    date = datetime(year=2023, month=12, day=1)
     if date.day == 1:
-        run(57346, 57345, date, "test run", True)
+        run(57346, 57345, date, "test run", False)
     elif date.day == 2:
         run("-", "-", date, "test run", True)
 

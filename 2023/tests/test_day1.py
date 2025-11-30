@@ -13,12 +13,10 @@ def test_day1example():
         expected_answer_a = example.answer_a
         expected_answer_b = example.answer_b
 
-        actual_answer_a, actual_answer_b = day1.solution(input)
-
         if part == 1:
-            assert expected_answer_a == actual_answer_a
+            assert expected_answer_a == str(day1.part_one(input))
 
         if part == 2:
-            assert expected_answer_b == actual_answer_b
+            assert expected_answer_b == str(day1.part_two(input))
 
     assert len(examples) > 0

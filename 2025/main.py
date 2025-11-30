@@ -8,7 +8,7 @@ import aoc_service as a
 def main():
     date = datetime(year=2025, month=12, day=1)
     if date.day == 1:
-        run(57346, 57345, date, "test run", True)
+        run("-", "-", date, "test run", True)
 
 
 def run(

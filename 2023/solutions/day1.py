@@ -1,20 +1,6 @@
 import re
 
 
-def solution(input):
-    try:
-        answer_a = str(part_one(input))
-    except Exception:
-        answer_a = "-"
-
-    try:
-        answer_b = str(part_two(input))
-    except Exception:
-        answer_b = "-"
-
-    return answer_a, answer_b
-
-
 def part_one(input):
     answer = 0
     for line in input.strip().split("\n"):
