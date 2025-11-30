@@ -36,14 +36,9 @@ def download(current_date=datetime.now()):
             print(f"Input file for day {day}, year {current_date.year} already exists.")
 
         # Download example
-        if not os.path.exists(example_filename):
-            command = f"aocd {day} {current_date.year} --example > {example_filename}"
-            subprocess.run(command, shell=True, check=True)
-            print(f"Downloaded example for day {day}, year {current_date.year}")
-        else:
-            print(
-                f"Example file for day {day}, year {current_date.year} already exists."
-            )
+        command = f"aocd {day} {current_date.year} --example > {example_filename}"
+        subprocess.run(command, shell=True, check=True)
+        print(f"Downloaded example for day {day}, year {current_date.year}")
 
 
 def generate_scripts(date=datetime.now()):
@@ -72,13 +67,11 @@ def test_day{day}example():
         expected_answer_a = example.answer_a
         expected_answer_b = example.answer_b
 
-        actual_answer_a, actual_answer_b = day{day}.solution(input)
-
         if part == 1:
-            assert expected_answer_a == actual_answer_a
+            assert expected_answer_a == str(day{day}.part_one(input))
 
         if part == 2:
-            assert expected_answer_b == actual_answer_b
+            assert expected_answer_b == str(day{day}.part_two(input))
 
     assert len(examples) > 0
     
@@ -90,13 +83,6 @@ def test_day{day}example():
     # Generate solution script
     solution_fpath = f"solutions\\day{day}.py"
     solution_content = f"""
-def solution(input):
-    answer_a = part_one(input)
-    answer_b = part_two(input)
-
-    return answer_a, answer_b
-
-
 def part_one(input):
     return "-"
 

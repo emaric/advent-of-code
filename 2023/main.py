@@ -6,8 +6,11 @@ import aoc_service as a
 
 
 def main():
-    date = datetime(year=2023, month=12, day=1)
-    run(57346, 57345, date, "test run", True)
+    date = datetime(year=2023, month=12, day=2)
+    if date.day == 1:
+        run(57346, 57345, date, "test run", True)
+    elif date.day == 2:
+        run("-", "-", date, "test run", True)
 
 
 def run(
@@ -18,7 +21,7 @@ def run(
 
     a.download(date)
     a.generate_scripts(date)
-    result = pytest.main([f"tests\\test_day{day}.py"])
+    result = pytest.main([f"tests\\test_day{day}.py::test_day{day}example"])
     if result == pytest.ExitCode.OK:
         print(f"Running day{day}.py...")
         actual_a, result_time_a = a.run(day, 1)
