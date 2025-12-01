@@ -37,9 +37,9 @@
 		<tr>
 			<th>Day</th>
 			<th>Part</th>
-			<th>Result Time (seconds)</th>
+			<th>Time</th>
 			<th>Timestamp</th>
-			<th>Owner</th>
+			<th>By</th>
 			<th>Code</th>
 		</tr>
 	</thead>
@@ -49,7 +49,7 @@
 				<td>{String(record.day).padStart(2, '0')}</td>
 				<td>{record.part}</td>
 				<td>{record.result_time.toFixed(4)}</td>
-				<td>{record.timestamp.toLocaleString()}</td>
+				<td class="timestamp">{record.timestamp.toLocaleString()}</td>
 				<td>{record.person}</td>
 				<td>
 					<!-- svelte-ignore a11y_invalid_attribute -->
@@ -87,5 +87,9 @@
 	th {
 		text-align: center;
 		padding: 0.5em;
+	}
+
+	.timestamp {
+		font-size: small;
 	}
 </style>

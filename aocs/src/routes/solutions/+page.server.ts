@@ -4,7 +4,8 @@ import { connectToDatabase, collections } from '$lib/db';
 import type { Record } from './record';
 
 export const load = (async ({ url }) => {
-	const year = url.searchParams.get('year') ?? new Date().getFullYear();
+	const yearParam = url.searchParams.get('year');
+	const year = yearParam ? parseInt(yearParam) : new Date().getFullYear();
 
 	if (collections.records == undefined) {
 		await connectToDatabase();
@@ -24,7 +25,7 @@ export const load = (async ({ url }) => {
 	const records = (await collections.records
 		?.find({
 			'year': {
-				$exists: year
+				$eq: year
 			}
 		})
 		.sort(sort)
