@@ -16,32 +16,26 @@ def part_two(input):
         digits = re.findall(
             r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))", line
         )
-        str_value = "".join((digits[0], digits[-1]))
 
-        str_value = str_value.replace("one", "1")
-        str_value = str_value.replace("two", "2")
-        str_value = str_value.replace("three", "3")
-        str_value = str_value.replace("four", "4")
-        str_value = str_value.replace("five", "5")
-        str_value = str_value.replace("six", "6")
-        str_value = str_value.replace("seven", "7")
-        str_value = str_value.replace("eight", "8")
-        str_value = str_value.replace("nine", "9")
-        answer += int(str_value)
+        d1 = parse_d(digits[0])
+        d2 = parse_d(digits[-1])
+        answer += d1 * 10 + d2
     return answer
 
 
-def main(part=1):
-    with open("inputs\\day1.txt", "r") as f:
-        input = f.read()
+VALUE_MAP = [
+    "",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+]
 
-    if part == 1:
-        return part_one(input)
-    elif part == 2:
-        return part_two(input)
-    else:
-        raise Exception("Not implemented.")
 
-
-if __name__ == "__main__":
-    main()
+def parse_d(d_str):
+    return VALUE_MAP.index(d_str) if d_str in VALUE_MAP else int(d_str)

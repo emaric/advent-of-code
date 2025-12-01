@@ -82,29 +82,13 @@ def test_day{day}example():
 
     # Generate solution script
     solution_fpath = f"solutions\\day{day}.py"
-    solution_content = f"""
+    solution_content = """
 def part_one(input):
     return "-"
 
 
 def part_two(input):
     return "-"
-
-
-def main(part=1):
-    with open("inputs\\\\day{day}.txt", "r") as f:
-        input = f.read()
-
-    if part == 1:
-        return part_one(input)
-    elif part == 2:
-        return part_two(input)
-    else:
-        raise Exception("Not implemented.")
-
-
-if __name__ == "__main__":
-    main()
     """
     if not Path(solution_fpath).exists():
         with open(solution_fpath, mode="w") as f:
@@ -125,16 +109,20 @@ def record_run_result(
     timestamp: datetime = datetime.now(),
 ):
     with open(f"solutions\\day{day}.py", "r") as f:
-        code = f.read()
+        code = f.read().strip()
         db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
 def run(day: int, part: int):
     try:
         module = importlib.import_module(f"solutions.day{day}")
-        main_func = getattr(module, "main")
+        func = getattr(module, "part_one" if part == 1 else "part_two")
+
+        with open(f"inputs\\day{day}.txt", "r") as f:
+            input_text = f.read()
+
         start = time.perf_counter()
-        answer = main_func(part)
+        answer = func(input_text)
         end = time.perf_counter()
         result_time = end - start
         print(f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds")

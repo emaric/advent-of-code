@@ -16,13 +16,14 @@ def init_client():
     )
 
 
-client = init_client()
-try:
-    # Send a ping to confirm a successful connection
-    client.admin.command({"ping": 1})
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-finally:
-    client.close()
+def test_connection():
+    client = init_client()
+    try:
+        # Send a ping to confirm a successful connection
+        client.admin.command({"ping": 1})
+        print("Pinged your deployment. You successfully connected to MongoDB!")
+    finally:
+        client.close()
 
 
 def create_record(year, day, part, result_time, timestamp, comment, person, code):
@@ -39,6 +40,13 @@ def create_record(year, day, part, result_time, timestamp, comment, person, code
             code=code,
             comment=comment,
         )
+
+        with collection.find(
+            {"year": year, "day": day, "part": part, "code": code}
+        ) as cursor:
+            for doc in cursor:
+                return doc["_id"]
+
         inserted = collection.insert_one(record)
         return inserted.inserted_id
     finally:
