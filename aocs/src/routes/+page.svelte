@@ -1,21 +1,15 @@
-<script lang="ts">
-	import Counter from './Counter.svelte';
-</script>
-
 <svelte:head>
 	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<meta name="description" content="aocs - advent of code solutions" />
+	<meta property="og:title" content="Advent of Code Solutions" />
 </svelte:head>
 
 <section>
-	<h1>
-		aocs
-	</h1>
+	<h1>aocs</h1>
 
-	<h2>
-		2025
-	</h2>
+	<h2>2025</h2>
 
+	<a href="/solutions">view solutions</a>
 </section>
 
 <style>

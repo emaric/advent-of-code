@@ -9,17 +9,24 @@
 	}
 	let { data }: Props = $props();
 
+	// svelte-ignore non_reactive_update
 	let modalOpen = writable(false);
+	// svelte-ignore non_reactive_update
+	let modalTitle = writable('');
 	let modalContent = writable('');
-    let modalTitle = writable('');
 
 	function showCode(code: string, event: Event) {
 		event.preventDefault(); // prevent <a> navigation
 		modalContent.set(code);
 		modalOpen.set(true);
-        modalTitle.set("code");
+		modalTitle.set('code');
 	}
 </script>
+
+<svelte:head>
+	<title>Solutions</title>
+	<meta name="description" content="About Advent of Code Solutions" />
+</svelte:head>
 
 <h1>solutions</h1>
 
@@ -53,12 +60,12 @@
 	</tbody>
 </table>
 
-<Modal bind:open={modalOpen} bind:title={modalTitle} >
-<Markdown>
-```python
-{$modalContent}
-```
-</Markdown>
+<Modal bind:open={modalOpen} bind:title={modalTitle}>
+	<Markdown>
+		```python
+		{$modalContent}
+		```
+	</Markdown>
 </Modal>
 
 <style>
