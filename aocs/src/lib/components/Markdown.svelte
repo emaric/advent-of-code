@@ -50,9 +50,3 @@
 <!-- Render highlighted HTML -->
 {@html $rendered}
 </div>
-
-<style>
-.rendered > pre {
-    font-size: var(--font-size);
-}
-</style>
