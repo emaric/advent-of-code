@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .ascii-line {
+      font-family: monospace;
+      font-size: 7px;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .green {
+      fill: #388E3C; /* Dark Green */
+    }
+    .red {
+      fill: #C62828; /* Dark Red */
+    }
+    .yellow {
+      fill: #FBC02D; /* Star Yellow */
+    }
+  </style>
+
+  <g id="christmas-tree-ascii">
+    <text class="ascii-line yellow" x="32" y="8">010</text>
+    <text class="ascii-line yellow" x="32" y="14">111</text>
+
+    <text class="ascii-line green" x="32" y="22">0</text>
+    <text class="ascii-line red" x="32" y="28">101</text>
+    <text class="ascii-line green" x="32" y="34">01010</text>
+    <text class="ascii-line red" x="32" y="40">1010101</text>
+    <text class="ascii-line green" x="32" y="46">010101010</text>
+
+    <text class="ascii-line red" x="32" y="54">111</text>
+    <text class="ascii-line red" x="32" y="60">111</text>
+  </g>
+</svg>
