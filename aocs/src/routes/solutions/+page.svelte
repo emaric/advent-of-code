@@ -40,6 +40,7 @@
 			<th>Time</th>
 			<th>Timestamp</th>
 			<th>By</th>
+			<th style="text-align: left;">Notes</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -49,10 +50,24 @@
 				<td>{record.part}</td>
 				<td>
 					<!-- svelte-ignore a11y_invalid_attribute -->
-					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}> {record.result_time.toFixed(4)} </a>
+					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}>
+						{record.result_time.toFixed(4)}
+					</a>
 				</td>
-				<td class="timestamp">{record.timestamp.toLocaleString()}</td>
+				<td class="timestamp"
+					>{record.timestamp.toLocaleString('en-US', {
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit',
+						hour: '2-digit',
+						minute: '2-digit',
+						second: '2-digit',
+						hour12: false,
+						timeZone: 'UTC'
+					})}</td
+				>
 				<td>{record.person}</td>
+				<td class="notes">{record.comment}</td>
 			</tr>
 		{/each}
 	</tbody>
@@ -61,7 +76,7 @@
 <Modal bind:open={modalOpen} bind:title={modalTitle}>
 	<Markdown>
 		```python
-{$modalContent}
+		{$modalContent}
 		```
 	</Markdown>
 </Modal>
@@ -89,5 +104,10 @@
 
 	.timestamp {
 		font-size: small;
+	}
+
+	.notes {
+		font-size: small;
+		text-align: left;
 	}
 </style>

@@ -7,6 +7,7 @@ export class Record {
 		public timestamp: Date,
 		public person: string,
 		public code: string,
+		public comment: string,
 		public _id?: string
 	) {}
 }
