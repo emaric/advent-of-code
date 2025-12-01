@@ -30,10 +30,11 @@
 
 <h1>solutions</h1>
 
+<h2>{data.year}</h2>
+
 <table class="record-table">
 	<thead>
 		<tr>
-			<th>Year</th>
 			<th>Day</th>
 			<th>Part</th>
 			<th>Result Time (seconds)</th>
@@ -45,15 +46,14 @@
 	<tbody>
 		{#each data.records as record}
 			<tr>
-				<td>{record.year}</td>
 				<td>{String(record.day).padStart(2, '0')}</td>
 				<td>{record.part}</td>
-				<td>{record.result_time.toFixed(6)}</td>
+				<td>{record.result_time.toFixed(4)}</td>
 				<td>{record.timestamp.toLocaleString()}</td>
 				<td>{record.person}</td>
 				<td>
 					<!-- svelte-ignore a11y_invalid_attribute -->
-					<a href="#" onclick={(e) => showCode(record.code, e)}> View Code </a>
+					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}> View </a>
 				</td>
 			</tr>
 		{/each}
@@ -63,7 +63,7 @@
 <Modal bind:open={modalOpen} bind:title={modalTitle}>
 	<Markdown>
 		```python
-		{$modalContent}
+{$modalContent}
 		```
 	</Markdown>
 </Modal>
@@ -73,9 +73,14 @@
 		margin-bottom: 1em;
 	}
 
+	h2 {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+
 	thead th {
 		font-weight: 400;
-		color: var(--color-theme-1);
+		color: var(--color-theme-2);
 	}
 
 	td,

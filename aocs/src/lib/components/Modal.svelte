@@ -3,8 +3,8 @@
 
 	export let open = writable(false); // control modal visibility
     export let title = writable('');
-	let fontSize = 14; // initial font size in px
-	let width = 600;
+	let fontSize = 12; // initial font size in px
+	let width = 458;
 	let height = 400;
 
 	function close() {

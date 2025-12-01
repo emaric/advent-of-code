@@ -42,11 +42,9 @@
 </script>
 
 <!-- Hidden slot container -->
-<div bind:this={container} style="display: none;">
+<div bind:this={container} style="display: none; --font-size: {fontSize}px;">
 	<slot></slot>
 </div>
 
-<div class="rendered" onwheel={handleWheel} style="--font-size: {fontSize}px;">
 <!-- Render highlighted HTML -->
 {@html $rendered}
-</div>
