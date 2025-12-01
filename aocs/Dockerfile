@@ -14,7 +14,7 @@ FROM node:lts-slim AS run
 WORKDIR /app
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/build ./build
-RUN npm install --production
+RUN npm install --omit=dev
 
 EXPOSE 3000
 ENTRYPOINT [ "npm", "run", "start" ]
