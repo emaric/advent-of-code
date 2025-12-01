@@ -40,7 +40,6 @@
 			<th>Time</th>
 			<th>Timestamp</th>
 			<th>By</th>
-			<th>Code</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -48,13 +47,12 @@
 			<tr>
 				<td>{String(record.day).padStart(2, '0')}</td>
 				<td>{record.part}</td>
-				<td>{record.result_time.toFixed(4)}</td>
-				<td class="timestamp">{record.timestamp.toLocaleString()}</td>
-				<td>{record.person}</td>
 				<td>
 					<!-- svelte-ignore a11y_invalid_attribute -->
-					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}> View </a>
+					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}> {record.result_time.toFixed(4)} </a>
 				</td>
+				<td class="timestamp">{record.timestamp.toLocaleString()}</td>
+				<td>{record.person}</td>
 			</tr>
 		{/each}
 	</tbody>
