@@ -75,9 +75,9 @@
 
 <Modal bind:open={modalOpen} bind:title={modalTitle}>
 	<Markdown>
-		```python
-		{$modalContent}
-		```
+```python
+{$modalContent}
+```
 	</Markdown>
 </Modal>
 
