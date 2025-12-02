@@ -32,13 +32,12 @@ def download(current_date=datetime.now()):
             command = f"aocd {day} {current_date.year} > {input_filename}"
             subprocess.run(command, shell=True, check=True)
             print(f"Downloaded input for day {day}, year {current_date.year}")
-        else:
-            print(f"Input file for day {day}, year {current_date.year} already exists.")
 
         # Download example
-        command = f"aocd {day} {current_date.year} --example > {example_filename}"
-        subprocess.run(command, shell=True, check=True)
-        print(f"Downloaded example for day {day}, year {current_date.year}")
+        if not os.path.exists(example_filename):
+            command = f"aocd {day} {current_date.year} --example > {example_filename}"
+            subprocess.run(command, shell=True, check=True)
+            print(f"Downloaded example for day {day}, year {current_date.year}")
 
 
 def generate_scripts(date=datetime.now()):
@@ -61,17 +60,13 @@ example_input = "inputs\\\\day{day}example.txt"
 def test_day{day}example():
     examples = parse_example({day})
 
-    for idx, example in enumerate(examples):
-        part = idx + 1
+    for example in examples:
         input = example.input_data
         expected_answer_a = example.answer_a
         expected_answer_b = example.answer_b
 
-        if part == 1:
-            assert expected_answer_a == str(day{day}.part_one(input))
-
-        if part == 2:
-            assert expected_answer_b == str(day{day}.part_two(input))
+        assert expected_answer_a == str(day{day}.part_one(input))
+        assert expected_answer_b == str(day{day}.part_two(input))
 
     assert len(examples) > 0
     
@@ -119,7 +114,7 @@ def run(day: int, part: int):
         func = getattr(module, "part_one" if part == 1 else "part_two")
 
         with open(f"inputs\\day{day}.txt", "r") as f:
-            input_text = f.read()
+            input_text = f.read().strip()
 
         start = time.perf_counter()
         answer = func(input_text)

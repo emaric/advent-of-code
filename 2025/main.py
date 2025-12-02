@@ -6,12 +6,13 @@ import aoc_service as a
 
 
 def main():
-    date = datetime(year=2025, month=12, day=1)
+    date = datetime(year=2025, month=12, day=2)
     if date.day == 1:
-        run_one("-", date)
-        # run_two("-", date)
+        run_one(1081, date, "final")
+        run_two(6689, date, "final")
     elif date.day == 2:
-        run("-", "-", date)
+        run_one("-", "-", date, "", False)
+        run_two("-", "-", date, "", False)
 
 
 def run_one(expected, date=datetime.now(), comment="", record_run_result=True):

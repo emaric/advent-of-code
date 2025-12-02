@@ -3,7 +3,7 @@
   "configurations": [
     
     {
-      "name": "Debug Script",
+      "name": "Debug Script: main",
       "type": "debugpy",
       "request": "launch",
       "module": "main",
