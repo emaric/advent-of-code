@@ -3,9 +3,11 @@ import os
 import re
 import subprocess
 import time
+import timeit
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from statistics import mean
 
 import db
 
@@ -108,7 +110,7 @@ def record_run_result(
         db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
-def run(day: int, part: int):
+def run(day: int, part: int, repeat: int = 1):
     try:
         module = importlib.import_module(f"solutions.day{day}")
         func = getattr(module, "part_one" if part == 1 else "part_two")
@@ -120,12 +122,26 @@ def run(day: int, part: int):
         answer = func(input_text)
         end = time.perf_counter()
         result_time = end - start
-        print(f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds")
+
+        if repeat > 1:
+
+            def to_run():
+                func(input_text)
+
+            result_time = mean(timeit.repeat(to_run, repeat=repeat, number=1))
+            print(
+                f"day{day} part{part} answer: {answer}, avg time: {result_time:.6f} seconds"
+            )
+        else:
+            print(
+                f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds"
+            )
+
         return answer, result_time
     except ImportError as e:
         print(f"Error importing module: {e}")
     except AttributeError:
-        print("Module imported but 'main' function not found")
+        print("Module to import not found")
 
 
 def parse_example(day: int):
