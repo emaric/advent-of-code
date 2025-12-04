@@ -23,6 +23,9 @@
       "type": "debugpy",
       "request": "launch",
       "module": "pytest",
+      "args": [
+        "${relativeFile}"
+      ],
       "env": {
         "PYTHONPATH": "${workspaceFolder},${workspaceFolder}/shared"
       },

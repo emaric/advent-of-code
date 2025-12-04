@@ -8,25 +8,28 @@ REPEAT = 1000
 
 
 def main():
-    date = datetime(year=2025, month=12, day=1)
+    date = datetime(year=2025, month=12, day=2)
     if date.day == 1:
         run_one(1081, date, "final")
         run_two(6689, date, "final")
     elif date.day == 2:
-        run_one("-", "-", date, "init")
-        run_two("-", "-", date, "init")
+        run_one(35367539282, date, "final")
+        run_two(45814076230, date, "final")
+    elif date.day == 3:
+        run_one("-", date, "init")
+        run_two("-", date, "init")
 
 
 def run_one(
     expected, date=datetime.now(), comment="", record_run_result=False, repeat=REPEAT
 ):
-    run(1, expected, date, comment, record_run_result)
+    run(1, expected, date, comment, record_run_result, repeat)
 
 
 def run_two(
     expected, date=datetime.now(), comment="", record_run_result=False, repeat=REPEAT
 ):
-    run(2, expected, date, comment, record_run_result)
+    run(2, expected, date, comment, record_run_result, repeat)
 
 
 def run(
