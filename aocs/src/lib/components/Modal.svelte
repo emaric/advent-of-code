@@ -96,6 +96,8 @@
 		flex-direction: column;
 		overflow: hidden;
 		z-index: 11;
+		max-width: 100vw;
+		max-height: 100vh;
 	}
 
 	.modal-header {

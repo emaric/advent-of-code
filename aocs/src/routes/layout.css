@@ -1,7 +1,8 @@
+@import '@fontsource-variable/source-code-pro';
 
 :root {
-	--font-body: "Source Code Pro", monospace;
-	--font-mono: "Source Code Pro", monospace;
+	--font-body: "Source Code Pro Variable", monospace;
+	--font-mono: "Source Code Pro Variable", monospace;
 	--color-bg-0: rgb(12, 12, 19);
 	--color-bg-1: rgb(22, 22, 29);
 	--color-bg-2: rgb(32, 32, 39);
@@ -19,7 +20,7 @@ body {
 	margin: 0;
 	background-attachment: fixed;
 	background-color: var(--color-bg-1);
-	background-size: 100vw 100vh;
+	background-size: 100% 100%;
 	background-image:
 		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
 }
@@ -53,6 +54,7 @@ h2 {
 }
 
 pre {
+	line-height: 1;
 	font-size: var(--font-size);
 	font-family: var(--font-mono);
 	background-color: rgba(22, 22, 29, 0.45);
