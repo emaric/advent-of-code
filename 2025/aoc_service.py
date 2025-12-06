@@ -154,6 +154,7 @@ def run(day: int, part: int, repeat: int = 1):
         print(f"Error importing module: {e}")
     except AttributeError:
         print("Module to import not found")
+    return None, 0.0
 
 
 def parse_example(day: int):
