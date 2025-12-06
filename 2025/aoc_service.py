@@ -13,10 +13,21 @@ import db
 
 PERSON = "m"
 
+# 256-color ANSI escape codes
+GREEN = "\033[0;32m"
+BLUE = "\033[0;34m"
+PURPLE = "\033[0;35m"
+CYAN = "\033[0;36m"
+ORANGE = "\x1b[38;5;208m"  # Orange from 256-color palette
+RESET = "\x1b[0m"
+
+PART_ONE_COLOR = CYAN
+PART_TWO_COLOR = GREEN
+
 
 def download(current_date=datetime.now()):
     # Get current date
-    print(current_date)
+    # print(current_date)
 
     # Ensure we're in December
     if current_date.month != 12:
@@ -123,6 +134,7 @@ def run(day: int, part: int, repeat: int = 1):
         end = time.perf_counter()
         result_time = end - start
 
+        color = PART_ONE_COLOR if part == 1 else PART_TWO_COLOR
         if repeat > 1:
 
             def to_run():
@@ -130,11 +142,11 @@ def run(day: int, part: int, repeat: int = 1):
 
             result_time = mean(timeit.repeat(to_run, repeat=repeat, number=1))
             print(
-                f"day{day} part{part} answer: {answer}, avg time: {result_time:.6f} seconds"
+                f"Day {day} {color}Part {part}{RESET} Answer: {color}{answer}{RESET}, Avg Time ({repeat}): {color}{result_time:.6f}{RESET} seconds"
             )
         else:
             print(
-                f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds"
+                f"Day {day} {color}Part {part}{RESET} Answer: {color}{answer}{RESET}, Time: {color}{result_time:.6f}{RESET} seconds"
             )
 
         return answer, result_time
