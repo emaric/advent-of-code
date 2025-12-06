@@ -7,9 +7,8 @@
 <section>
 	<h1>aocs</h1>
 
-	<h2>2025</h2>
-
-	<a href="/solutions">view solutions</a>
+	<a href="/solutions/2025">2025</a>
+	<a href="/solutions/2023">2023</a>
 </section>
 
 <style>
