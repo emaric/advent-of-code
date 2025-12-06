@@ -6,10 +6,6 @@ from functools import cached_property
 class Point:
     row: int
     col: int
-    _ap = None
-
-    def __eq__(self, point: Point):
-        return self.row == point.row and self.col == point.col
 
     def __hash__(self):
         return hash((self.row, self.col))
@@ -46,21 +42,18 @@ class Point:
     def SW(self):
         return Point(self.row + 1, self.col - 1)
 
-    @property
+    @cached_property
     def adjacent_points(self):
-        if self._ap is None:
-            self._ap = [
-                self.N,
-                self.E,
-                self.W,
-                self.S,
-                self.NE,
-                self.NW,
-                self.SE,
-                self.SW,
-            ]
-
-        return self._ap
+        return [
+            self.N,
+            self.E,
+            self.W,
+            self.S,
+            self.NE,
+            self.NW,
+            self.SE,
+            self.SW,
+        ]
 
     @property
     def adjacent_points_async(self):
