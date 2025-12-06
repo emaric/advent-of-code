@@ -7,25 +7,48 @@ class Point:
     col: int
 
     @property
-    def adjacent_points(self):
-        N = Point(self.row - 1, self.col)
-        E = Point(self.row, self.col + 1)
-        W = Point(self.row, self.col - 1)
-        S = Point(self.row + 1, self.col)
-        NE = Point(self.row - 1, self.col + 1)
-        NW = Point(self.row - 1, self.col - 1)
-        SE = Point(self.row + 1, self.col + 1)
-        SW = Point(self.row + 1, self.col - 1)
+    def N(self):
+        return Point(self.row - 1, self.col)
 
+    @property
+    def E(self):
+        return Point(self.row, self.col + 1)
+
+    @property
+    def W(self):
+        return Point(self.row, self.col - 1)
+
+    @property
+    def S(self):
+        return Point(self.row + 1, self.col)
+
+    @property
+    def NE(self):
+        return Point(self.row - 1, self.col + 1)
+
+    @property
+    def NW(self):
+        return Point(self.row - 1, self.col - 1)
+
+    @property
+    def SE(self):
+        return Point(self.row + 1, self.col + 1)
+
+    @property
+    def SW(self):
+        return Point(self.row + 1, self.col - 1)
+
+    @property
+    def adjacent_points(self):
         return [
-            N,
-            E,
-            W,
-            S,
-            NE,
-            NW,
-            SE,
-            SW,
+            self.N,
+            self.E,
+            self.W,
+            self.S,
+            self.NE,
+            self.NW,
+            self.SE,
+            self.SW,
         ]
 
 
@@ -44,9 +67,11 @@ def part_one(input: str):
     grid = to_grid(input)
     for point in grid.keys():
         if grid[point] == "@":
-            adjacent_rolls_count = len(
-                [n for n in point.adjacent_points if n in grid and grid[n] == "@"]
-            )
+            adjacent_rolls_count = 0
+            for adjacent_point in point.adjacent_points:
+                if adjacent_point in grid and grid[adjacent_point] == "@":
+                    adjacent_rolls_count += 1
+
             if adjacent_rolls_count < 4:
                 answer += 1
 
@@ -70,9 +95,10 @@ def part_two_with_grid(grid):
     answer = 0
     for point in grid:
         if grid[point] == "@":
-            adjacent_rolls_count = len(
-                [n for n in point.adjacent_points if n in grid and grid[n] == "@"]
-            )
+            adjacent_rolls_count = 0
+            for adjacent_point in point.adjacent_points:
+                if adjacent_point in grid and grid[adjacent_point] == "@":
+                    adjacent_rolls_count += 1
             if adjacent_rolls_count < 4:
                 answer += 1
                 grid[point] = "."
