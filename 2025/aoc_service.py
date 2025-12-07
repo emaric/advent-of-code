@@ -5,7 +5,7 @@ import subprocess
 import time
 import timeit
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from statistics import mean
 
@@ -114,7 +114,7 @@ def record_run_result(
     result_time: float,
     comment: str = "",
     person=PERSON,
-    timestamp: datetime = datetime.now(),
+    timestamp: datetime = datetime.now(timezone.utc),
 ):
     with open(f"solutions\\day{day}.py", "r") as f:
         code = f.read().strip()
