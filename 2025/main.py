@@ -10,7 +10,7 @@ REPEAT = 100
 
 
 def main():
-    date = datetime(year=2025, month=12, day=4)
+    date = datetime(year=2025, month=12, day=5)
     if date.day == 1:
         run_one(1081, date, "final")
         run_two(6689, date, "final")
@@ -21,8 +21,11 @@ def main():
         run_one(16946, date, "final")
         run_two(168627047606506, date, "final")
     elif date.day == 4:
-        run_one(1495, date, "final")
-        run_two(8768, date, "final")
+        run_one(1495, date, "test utc timestamp")
+        run_two(8768, date, "test utc timestamp")
+    elif date.day == 5:
+        run_one(664, date, "unwrapped func calls")
+        run_two(350780324308385, date, "init")
 
 
 def run_one(
@@ -65,7 +68,7 @@ def run(
     if result == pytest.ExitCode.OK:
         print(f"Running Day {day} Part {part} solution...")
         print("======================================================================")
-        actual, _ = a.run(day, part)
+        actual, _ = a.run(day, part, 10)
         print("======================================================================")
         print("")
         color = a.PART_ONE_COLOR if part == 1 else a.PART_TWO_COLOR
