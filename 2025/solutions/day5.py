@@ -28,24 +28,17 @@ def part_two(input: str):
         else:
             break
 
-    TRACKER = sorted(TRACKER, key=lambda x: x[-1])
+    TRACKER = sorted(TRACKER)
 
     answer = 0
-    for idx, (cur_start, cur_end) in enumerate(TRACKER):
-        for start, _ in TRACKER[idx + 1 :]:
-            if cur_end < start:
-                continue
-            elif cur_end > start:
-                cur_end = start - 1
-                if cur_end <= 0 or cur_end <= cur_start:
-                    break
-            else:
-                cur_end -= 1
-                if cur_end <= 0 or cur_end <= cur_start:
-                    break
-
-        fresh_count = cur_end + 1 - cur_start
-        fresh_count = max(0, fresh_count)
-        answer += fresh_count
+    end = 0
+    for cur_start, cur_end in TRACKER:
+        fresh = cur_end + 1 - cur_start
+        if end > cur_end:
+            continue
+        if end >= cur_start:
+            fresh = cur_end - end
+        answer += fresh
+        end = max(cur_end, end)
 
     return answer

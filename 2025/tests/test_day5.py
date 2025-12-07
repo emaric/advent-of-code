@@ -24,9 +24,10 @@ def test_day5part2_1():
 16-20
 3-5
 10-14
+3-20
 """
 
-    expected = 14
+    expected = 18
     actual = day5.part_two(input.strip())
 
     assert expected == actual

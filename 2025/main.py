@@ -25,7 +25,7 @@ def main():
         run_two(8768, date, "test utc timestamp")
     elif date.day == 5:
         run_one(664, date, "unwrapped func calls")
-        run_two(350780324308385, date, "init")
+        run_two(350780324308385, date, "v's")
 
 
 def run_one(
@@ -43,9 +43,7 @@ def run_two(
 def _run_pytest(day: int):
     pytest_output = io.StringIO()
     sys.stdout = pytest_output
-    result = pytest.main(
-        [f"tests\\test_day{day}.py::test_day{day}example", "--color=yes"]
-    )
+    result = pytest.main([f"tests\\test_day{day}.py", "--color=yes"])
     sys.stdout = sys.__stdout__
     return result, pytest_output.getvalue()
 
