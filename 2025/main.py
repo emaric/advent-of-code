@@ -10,7 +10,7 @@ REPEAT = 100
 
 
 def main():
-    date = datetime(year=2025, month=12, day=5)
+    date = datetime(year=2025, month=12, day=6)
     if date.day == 1:
         run_one(1081, date, "final")
         run_two(6689, date, "final")
@@ -26,6 +26,12 @@ def main():
     elif date.day == 5:
         run_one(664, date, "unwrapped func calls")
         run_two(350780324308385, date, "v's")
+    elif date.day == 6:
+        run_one(4449991244405, date, "final")
+        run_two(9348430857627, date, "final")
+    elif date.day == 7:
+        run_one("", date, "init")
+        run_two("", date, "init")
 
 
 def run_one(

@@ -137,7 +137,7 @@ def run(day: int, part: int, repeat: int = 1):
         func = getattr(module, "part_one" if part == 1 else "part_two")
 
         with open(f"inputs\\day{day}.txt", "r") as f:
-            input_text = f.read().strip()
+            input_text = f.read()
 
         start = time.perf_counter()
         answer = func(input_text)
