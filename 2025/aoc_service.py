@@ -82,7 +82,17 @@ def test_day{day}example():
         assert expected_answer_b == str(day{day}.part_two(input))
 
     assert len(examples) > 0
-    
+
+
+def test_day{day}custom():
+    input = ""
+
+    actual = ""
+    # actual = day{day}.part_one(input.strip())
+    # actual = day{day}.part_two(input.strip())
+
+    expected = ""
+    assert expected == actual
     """
     if not Path(test_fpath).exists():
         with open(test_fpath, "w") as f:
