@@ -8,6 +8,7 @@
       "request": "launch",
       "module": "main",
       "console": "integratedTerminal",
+      "redirectOutput": true,
       "args": [
         "--file",
         "${relativeFile}"
@@ -23,6 +24,8 @@
       "type": "debugpy",
       "request": "launch",
       "module": "pytest",
+      "console": "integratedTerminal",
+      "redirectOutput": true,
       "args": [
         "${relativeFile}"
       ],
