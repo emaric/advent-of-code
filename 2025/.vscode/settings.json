@@ -28,6 +28,7 @@
   "python.testing.pytestArgs": [
     "tests"
   ],
+  "python.analysis.typeCheckingMode": "basic",
   "files.exclude": {
     "**/*.egg-info": true,
     "**/htmlcov": true,
