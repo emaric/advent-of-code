@@ -68,3 +68,15 @@ export async function deleteRecord(id: string) {
 	const deletedCount = deleteResult?.deletedCount || 0
 	return deletedCount > 0
 }
+
+
+export async function findYears() {
+	collections.records ?? await connectToDatabase();
+	const sort: {
+		year: SortDirection;
+	} = {
+		year: 'desc',
+	};
+	const years = (await collections.records?.distinct('year')) as unknown as number[]
+	return years.reverse()
+}
