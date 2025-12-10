@@ -103,3 +103,33 @@ button:focus:not(:focus-visible) {
 	width: 1px;
 	white-space: nowrap;
 }
+
+.bracket-btn {
+  font: inherit;
+  color: var(--color-theme-2);
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.bracket-btn::before,
+.bracket-btn::after {
+  content: '[';
+  color: var(--color-theme-2);
+  transition: color 0.2s ease;
+}
+
+.bracket-btn::after {
+  content: ']';
+}
+
+.bracket-btn:hover {
+  color: var(--color-theme-1);
+}
+
+.bracket-btn:hover::before,
+.bracket-btn:hover::after {
+  color: var(--color-theme-1);
+}

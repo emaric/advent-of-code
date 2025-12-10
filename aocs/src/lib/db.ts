@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private'
-import { MongoClient, type Collection, type Db, type SortDirection } from 'mongodb';
+import { MongoClient, ObjectId, type Collection, type Db, type DeleteResult, type SortDirection } from 'mongodb';
 import { Record } from './models/record';
 import * as dotenv from 'dotenv';
 
@@ -59,4 +59,12 @@ export async function findDays(year: number) {
 	collections.records ?? await connectToDatabase()
 	const days = (await collections.records?.distinct('day', {year: {$eq: year}})) as unknown as number[]
 	return days
+}
+
+
+export async function deleteRecord(id: string) {
+	collections.records ?? await connectToDatabase()
+	const deleteResult: DeleteResult | undefined = await collections.records?.deleteOne({_id: new ObjectId(id)})
+	const deletedCount = deleteResult?.deletedCount || 0
+	return deletedCount > 0
 }

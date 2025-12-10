@@ -5,6 +5,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import { onMount } from 'svelte';
+	import { Record } from '$lib/models/record';
 
 	interface Props {
 		data: PageData;
@@ -12,6 +13,7 @@
 	let { data: _data }: Props = $props();
 
 	let data = $state({ ..._data });
+	let selected: Record | undefined = $state()
 
 	onMount(async () => {
 		await updateDays(_data.year);
@@ -31,11 +33,13 @@
 	let modalTitle = writable('');
 	let modalContent = writable('');
 
-	function showCode(code: string, event: Event) {
+	function showCode(record: Record, event: Event) {
 		event.preventDefault(); // prevent <a> navigation
-		modalContent.set(code);
+		modalContent.set(record.code);
 		modalOpen.set(true);
-		modalTitle.set('code');
+		const title = `${record.year} ${record.day} Part ${record.part}, Time: ${record.result_time.toFixed(4)} (${record.person})`
+		modalTitle.set(title);
+		selected = record
 	}
 
 	async function updateData(year: number, day: number) {
@@ -86,6 +90,24 @@
 
 		return 'just now';
 	}
+
+	async function deleteSelected() {
+		if (!selected) return;
+		const res = await fetch(`/api/solutions/`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				id: selected?._id
+			})
+		});
+		const resJson = await res.json()
+		if (resJson.success) {
+			modalOpen.set(false)
+			data.records = data.records?.filter(r => r._id !== selected?._id)
+		}
+	}
 </script>
 
 <svelte:head>
@@ -123,7 +145,7 @@
 				<td>{record.part}</td>
 				<td>
 					<!-- svelte-ignore a11y_invalid_attribute -->
-					<a href="#" onclick={(e) => showCode(record.code.trim(), e)}>
+					<a href="#" onclick={(e) => showCode(record, e)}>
 						{record.result_time.toFixed(4)}
 					</a>
 				</td>
@@ -136,14 +158,70 @@
 </table>
 
 <Modal bind:open={modalOpen} bind:title={modalTitle}>
-	<Markdown>
+	<div class="solution-container">
+		<div class="top">
+			{selected?.comment}
+		</div>
+		<div class="center">
+			<div class="content">
+			<Markdown>
 ```python
 {$modalContent}
 ```
-	</Markdown>
+			</Markdown>
+			</div>
+		</div>
+		<div class="bottom">
+			<button 
+				class="bracket-btn"
+				onclick={() => navigator.clipboard.writeText(selected?.code ?? '')}
+			>Copy</button>
+			<button 
+				class="bracket-btn"
+				onclick={deleteSelected}
+			>Delete</button>
+		</div>
+	</div>
 </Modal>
 
 <style>
+	.solution-container {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+	}
+	
+	.solution-container > .top {
+		flex: 0 0 auto;
+		padding-bottom: 1rem;
+	}
+
+	.solution-container > .top::before {
+		content: 'Notes: ';
+	}
+	
+	.solution-container > .center {
+		background-color: green;
+		flex: 1 1 auto;
+		overflow: auto;
+		min-height: 0;
+	}
+
+	.solution-container > .center > .content {
+		width: 100%;
+		height: 100%;
+	}
+
+	.solution-container > .bottom {
+		flex: 0 0 auto;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		padding-top: 0.5rem;
+		font-size: 1rem;
+	}
+
 	h1 {
 		margin-bottom: 1em;
 	}

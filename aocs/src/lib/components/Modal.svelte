@@ -4,8 +4,8 @@
 	export let open = writable(false); // control modal visibility
     export let title = writable('');
 	let fontSize = 12; // initial font size in px
-	let width = 458;
-	let height = 400;
+	let width = 800;
+	let height = 600;
 
 	function close() {
 		open.set(false);
