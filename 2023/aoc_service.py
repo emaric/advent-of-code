@@ -3,18 +3,31 @@ import os
 import re
 import subprocess
 import time
+import timeit
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
+from statistics import mean
 
 import db
 
 PERSON = "m"
 
+# 256-color ANSI escape codes
+GREEN = "\033[0;32m"
+BLUE = "\033[0;34m"
+PURPLE = "\033[0;35m"
+CYAN = "\033[0;36m"
+ORANGE = "\x1b[38;5;208m"  # Orange from 256-color palette
+RESET = "\x1b[0m"
+
+PART_ONE_COLOR = CYAN
+PART_TWO_COLOR = GREEN
+
 
 def download(current_date=datetime.now()):
     # Get current date
-    print(current_date)
+    # print(current_date)
 
     # Ensure we're in December
     if current_date.month != 12:
@@ -32,13 +45,12 @@ def download(current_date=datetime.now()):
             command = f"aocd {day} {current_date.year} > {input_filename}"
             subprocess.run(command, shell=True, check=True)
             print(f"Downloaded input for day {day}, year {current_date.year}")
-        else:
-            print(f"Input file for day {day}, year {current_date.year} already exists.")
 
         # Download example
-        command = f"aocd {day} {current_date.year} --example > {example_filename}"
-        subprocess.run(command, shell=True, check=True)
-        print(f"Downloaded example for day {day}, year {current_date.year}")
+        if not os.path.exists(example_filename):
+            command = f"aocd {day} {current_date.year} --example > {example_filename}"
+            subprocess.run(command, shell=True, check=True)
+            print(f"Downloaded example for day {day}, year {current_date.year}")
 
 
 def generate_scripts(date=datetime.now()):
@@ -61,20 +73,26 @@ example_input = "inputs\\\\day{day}example.txt"
 def test_day{day}example():
     examples = parse_example({day})
 
-    for idx, example in enumerate(examples):
-        part = idx + 1
+    for example in examples:
         input = example.input_data
         expected_answer_a = example.answer_a
         expected_answer_b = example.answer_b
 
-        if part == 1:
-            assert expected_answer_a == str(day{day}.part_one(input))
-
-        if part == 2:
-            assert expected_answer_b == str(day{day}.part_two(input))
+        assert expected_answer_a == str(day{day}.part_one(input))
+        assert expected_answer_b == str(day{day}.part_two(input))
 
     assert len(examples) > 0
-    
+
+
+def test_day{day}custom():
+    input = ""
+
+    actual = ""
+    # actual = day{day}.part_one(input.strip())
+    # actual = day{day}.part_two(input.strip())
+
+    expected = ""
+    assert expected == actual
     """
     if not Path(test_fpath).exists():
         with open(test_fpath, "w") as f:
@@ -83,11 +101,11 @@ def test_day{day}example():
     # Generate solution script
     solution_fpath = f"solutions\\day{day}.py"
     solution_content = """
-def part_one(input):
+def part_one(input: str):
     return "-"
 
 
-def part_two(input):
+def part_two(input: str):
     return "-"
     """
     if not Path(solution_fpath).exists():
@@ -106,14 +124,14 @@ def record_run_result(
     result_time: float,
     comment: str = "",
     person=PERSON,
-    timestamp: datetime = datetime.now(),
+    timestamp: datetime = datetime.now(timezone.utc),
 ):
     with open(f"solutions\\day{day}.py", "r") as f:
         code = f.read().strip()
         db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
-def run(day: int, part: int):
+def run(day: int, part: int, repeat: int = 1):
     try:
         module = importlib.import_module(f"solutions.day{day}")
         func = getattr(module, "part_one" if part == 1 else "part_two")
@@ -125,12 +143,28 @@ def run(day: int, part: int):
         answer = func(input_text)
         end = time.perf_counter()
         result_time = end - start
-        print(f"day{day} part{part} answer: {answer}, time: {result_time:.6f} seconds")
+
+        color = PART_ONE_COLOR if part == 1 else PART_TWO_COLOR
+        if repeat > 1:
+
+            def to_run():
+                func(input_text)
+
+            result_time = mean(timeit.repeat(to_run, repeat=repeat, number=1))
+            print(
+                f"Day {day} {color}Part {part}{RESET} Answer: {color}{answer}{RESET}, Avg Time ({repeat}): {color}{result_time:.6f}{RESET} seconds"
+            )
+        else:
+            print(
+                f"Day {day} {color}Part {part}{RESET} Answer: {color}{answer}{RESET}, Time: {color}{result_time:.6f}{RESET} seconds"
+            )
+
         return answer, result_time
     except ImportError as e:
         print(f"Error importing module: {e}")
     except AttributeError:
-        print("Module imported but 'main' function not found")
+        print("Module to import not found")
+    return None, 0.0
 
 
 def parse_example(day: int):
