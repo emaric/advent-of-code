@@ -25,7 +25,7 @@
 	<h1>aocs</h1>
 
 	{#each years as year}
-		<a href="/solutions/{year}">{year}</a>
+		<a href="/solutions/{year}/0">{year}</a>
 	{/each}
 </section>
 
