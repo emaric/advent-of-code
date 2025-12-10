@@ -68,11 +68,7 @@
 			<slot></slot>
 		</div>
 
-		<div
-			class="resizer"
-			bind:this={resizer}
-			onpointerdown={pointerDown}
-		></div>
+		
 	</div>
 {/if}
 
