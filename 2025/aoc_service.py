@@ -70,18 +70,22 @@ from solutions import day{day}
 example_input = "inputs\\\\day{day}example.txt"
 
 
-def test_day{day}example():
+def test_day{day}part_one():
     examples = parse_example({day})
 
     for example in examples:
         input = example.input_data
         expected_answer_a = example.answer_a
-        expected_answer_b = example.answer_b
-
         assert expected_answer_a == str(day{day}.part_one(input))
-        assert expected_answer_b == str(day{day}.part_two(input))
 
-    assert len(examples) > 0
+
+def test_day{day}part_two():
+    examples = parse_example({day})
+
+    for example in examples:
+        input = example.input_data
+        expected_answer_b = example.answer_b
+        assert expected_answer_b == str(day{day}.part_two(input))
 
 
 def test_day{day}custom():

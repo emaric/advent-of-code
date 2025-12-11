@@ -10,28 +10,32 @@ REPEAT = 100
 
 
 def main():
-    date = datetime(year=2025, month=12, day=7)
-    if date.day == 1:
-        run_one(1081, date, "final")
-        run_two(6689, date, "final")
-    elif date.day == 2:
-        run_one(35367539282, date, "final")
-        run_two(45814076230, date, "final")
-    elif date.day == 3:
-        run_one(16946, date, "final")
-        run_two(168627047606506, date, "final")
-    elif date.day == 4:
-        run_one(1495, date, "test utc timestamp")
-        run_two(8768, date, "test utc timestamp")
-    elif date.day == 5:
-        run_one(664, date, "unwrapped func calls")
-        run_two(350780324308385, date, "v's")
-    elif date.day == 6:
-        run_one(4449991244405, date, "final")
-        run_two(9348430857627, date, "final")
-    elif date.day == 7:
-        run_one(1490, date, "init")
-        run_two(3806264447357, date, "init")
+    for day in range(1, 9):
+        date = datetime(year=2025, month=12, day=day)
+        if date.day == 1:
+            run_one(1081, date, "final")
+            run_two(6689, date, "final")
+        elif date.day == 2:
+            run_one(35367539282, date, "final")
+            run_two(45814076230, date, "final")
+        elif date.day == 3:
+            run_one(16946, date, "final")
+            run_two(168627047606506, date, "final")
+        elif date.day == 4:
+            run_one(1495, date, "test utc timestamp")
+            run_two(8768, date, "test utc timestamp")
+        elif date.day == 5:
+            run_one(664, date, "unwrapped func calls")
+            run_two(350780324308385, date, "v's")
+        elif date.day == 6:
+            run_one(4449991244405, date, "final")
+            run_two(9348430857627, date, "final")
+        elif date.day == 7:
+            run_one(1490, date, "init")
+            run_two(3806264447357, date, "init")
+        elif date.day == 8:
+            run_one(98696, date, "v's")
+            run_two("", date, "init")
 
 
 def run_one(
@@ -46,10 +50,20 @@ def run_two(
     run(2, expected, date, comment, record_run_result, repeat)
 
 
-def _run_pytest(day: int):
+def _run_pytest(day: int, part: int, test_fname=None):
+    test_fname = (
+        f"test_day{day}part_{'one' if part == 1 else 'two'}"
+        if test_fname is None
+        else test_fname
+    )
     pytest_output = io.StringIO()
     sys.stdout = pytest_output
-    result = pytest.main([f"tests\\test_day{day}.py", "--color=yes"])
+    result = pytest.main(
+        [
+            f"tests\\test_day{day}.py::{test_fname}",
+            "--color=yes",
+        ]
+    )
     sys.stdout = sys.__stdout__
     return result, pytest_output.getvalue()
 
@@ -67,12 +81,17 @@ def run(
     a.download(date)
     a.generate_scripts(date)
 
-    result, pytest_output = _run_pytest(day)
+    print(f"Running Example Day {day} Part {part} solution...")
+    result, pytest_output = _run_pytest(day, part)
+    if result == pytest.ExitCode.USAGE_ERROR:
+        result, pytest_output = _run_pytest(day, part, f"test_day{day}example")
+
+    print(pytest_output)
 
     if result == pytest.ExitCode.OK:
         print(f"Running Day {day} Part {part} solution...")
         print("======================================================================")
-        actual, _ = a.run(day, part, 10)
+        actual, _ = a.run(day, part)
         print("======================================================================")
         print("")
         color = a.PART_ONE_COLOR if part == 1 else a.PART_TWO_COLOR
@@ -84,8 +103,6 @@ def run(
             actual, avg_run_time = a.run(day, part, repeat)
             a.record_run_result(year, day, part, avg_run_time, comment)
             print("")
-    else:
-        print(pytest_output)
 
 
 if __name__ == "__main__":

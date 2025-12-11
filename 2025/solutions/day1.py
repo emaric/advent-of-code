@@ -4,7 +4,7 @@ import math
 def part_one(input):
     answer = 0
     dial = 50
-    for line in input.split("\n"):
+    for line in input.strip().split("\n"):
         dir, turns = line[0], int(line[1:])
         turns = -turns if dir == "L" else turns
         dial += turns
@@ -16,7 +16,7 @@ def part_one(input):
 def part_two(input):
     answer = 0
     dial = 50
-    for line in input.split("\n"):
+    for line in input.strip().split("\n"):
         dir, turns = line[0], int(line[1:])
 
         answer += math.trunc(turns / 100)
