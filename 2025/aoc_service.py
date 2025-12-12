@@ -71,7 +71,7 @@ example_input = "inputs\\\\day{day}example.txt"
 
 
 def test_day{day}part_one():
-    print("\nRunning test_day{day}part_one...\n\n")
+    print("\\nRunning test_day{day}part_one...\\n\\n")
     examples = parse_example({day})
 
     for example in examples:
@@ -81,7 +81,7 @@ def test_day{day}part_one():
 
 
 def test_day{day}part_two():
-    print("\nRunning test_day{day}part_two...\n\n")
+    print("\\nRunning test_day{day}part_two...\\n\\n")
     examples = parse_example({day})
 
     for example in examples:
@@ -91,7 +91,7 @@ def test_day{day}part_two():
 
 
 def test_day{day}custom():
-    print("\nRunning test_day{day}custom...\n\n")
+    print("\\nRunning test_day{day}custom...\\n\\n")
     input = ""
 
     actual = ""
