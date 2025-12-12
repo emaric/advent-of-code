@@ -15,38 +15,6 @@ class Point:
     def __hash__(self):
         return hash((self.row, self.col))
 
-    @property
-    def N(self):
-        return Point(self.row - 1, self.col)
-
-    @property
-    def E(self):
-        return Point(self.row, self.col + 1)
-
-    @property
-    def W(self):
-        return Point(self.row, self.col - 1)
-
-    @property
-    def S(self):
-        return Point(self.row + 1, self.col)
-
-    @property
-    def NE(self):
-        return Point(self.row - 1, self.col + 1)
-
-    @property
-    def NW(self):
-        return Point(self.row - 1, self.col - 1)
-
-    @property
-    def SE(self):
-        return Point(self.row + 1, self.col + 1)
-
-    @property
-    def SW(self):
-        return Point(self.row + 1, self.col - 1)
-
 
 @dataclass
 class Rectangle:
