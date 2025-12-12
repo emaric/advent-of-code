@@ -10,32 +10,35 @@ REPEAT = 100
 
 
 def main():
-    for day in range(1, 9):
-        date = datetime(year=2025, month=12, day=day)
-        if date.day == 1:
-            run_one(1081, date, "final")
-            run_two(6689, date, "final")
-        elif date.day == 2:
-            run_one(35367539282, date, "final")
-            run_two(45814076230, date, "final")
-        elif date.day == 3:
-            run_one(16946, date, "final")
-            run_two(168627047606506, date, "final")
-        elif date.day == 4:
-            run_one(1495, date, "test utc timestamp")
-            run_two(8768, date, "test utc timestamp")
-        elif date.day == 5:
-            run_one(664, date, "unwrapped func calls")
-            run_two(350780324308385, date, "v's")
-        elif date.day == 6:
-            run_one(4449991244405, date, "final")
-            run_two(9348430857627, date, "final")
-        elif date.day == 7:
-            run_one(1490, date, "init")
-            run_two(3806264447357, date, "init")
-        elif date.day == 8:
-            run_one(98696, date, "v's")
-            run_two("", date, "init")
+    day = 9
+    date = datetime(year=2025, month=12, day=day)
+    if date.day == 1:
+        run_one(1081, date, "final")
+        run_two(6689, date, "final")
+    elif date.day == 2:
+        run_one(35367539282, date, "final")
+        run_two(45814076230, date, "final")
+    elif date.day == 3:
+        run_one(16946, date, "final")
+        run_two(168627047606506, date, "final")
+    elif date.day == 4:
+        run_one(1495, date, "test utc timestamp")
+        run_two(8768, date, "test utc timestamp")
+    elif date.day == 5:
+        run_one(664, date, "unwrapped func calls")
+        run_two(350780324308385, date, "v's")
+    elif date.day == 6:
+        run_one(4449991244405, date, "final")
+        run_two(9348430857627, date, "final")
+    elif date.day == 7:
+        run_one(1490, date, "init")
+        run_two(3806264447357, date, "init")
+    elif date.day == 8:
+        run_one(98696, date, "v's")
+        run_two("", date, "init")
+    elif date.day == 9:
+        run_one(4759420470, date, "init")
+        run_two(1603439684, date, "init", False, 10)
 
 
 def run_one(
@@ -57,14 +60,15 @@ def _run_pytest(day: int, part: int, test_fname=None):
         else test_fname
     )
     pytest_output = io.StringIO()
-    sys.stdout = pytest_output
+    # sys.stdout = pytest_output
     result = pytest.main(
         [
             f"tests\\test_day{day}.py::{test_fname}",
             "--color=yes",
+            "--capture=tee-sys",
         ]
     )
-    sys.stdout = sys.__stdout__
+    # sys.stdout = sys.__stdout__
     return result, pytest_output.getvalue()
 
 
