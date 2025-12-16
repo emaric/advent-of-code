@@ -40,8 +40,8 @@ def main():
         run_one(4759420470, date, "init")
         run_two(1603439684, date, "init")
     elif date.day == 10:
-        run_one("", date, "init")
-        # run_two("", date, "init")
+        # run_one(449, date, "init", False, 10)
+        run_two("", date, "init")
 
 
 def run_one(
