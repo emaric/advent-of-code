@@ -10,7 +10,7 @@ REPEAT = 100
 
 
 def main():
-    day = 10
+    day = 11
     date = datetime(year=2025, month=12, day=day)
     if date.day == 1:
         run_one(1081, date, "final")
@@ -42,6 +42,9 @@ def main():
     elif date.day == 10:
         # run_one(449, date, "init", False, 10)
         run_two("", date, "init")
+    elif date.day == 11:
+        run_one(477, date, "init")
+        run_two(383307150903216, date, "init")
 
 
 def run_one(
