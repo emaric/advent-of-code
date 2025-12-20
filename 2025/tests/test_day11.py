@@ -22,15 +22,3 @@ def test_day11part_two():
         input = example.input_data
         expected_answer_b = example.answer_b
         assert expected_answer_b == str(day11.part_two(input))
-
-
-def test_day11custom():
-    print("\nRunning test_day11custom...\n\n")
-    input = ""
-
-    actual = ""
-    # actual = day11.part_one(input.strip())
-    # actual = day11.part_two(input.strip())
-
-    expected = ""
-    assert expected == actual
