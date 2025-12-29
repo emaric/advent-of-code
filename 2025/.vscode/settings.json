@@ -38,5 +38,6 @@
     "**/__pycache__": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true
-  }
+  },
+  "python.languageServer": "None"
 }
