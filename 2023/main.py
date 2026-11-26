@@ -1,5 +1,6 @@
 import io
 import sys
+import subprocess
 from datetime import datetime
 
 import pytest
@@ -10,7 +11,7 @@ REPEAT = 100
 
 
 def main():
-    date = datetime(year=2023, month=12, day=1)
+    date = datetime(year=2023, month=12, day=2)
     if date.day == 1:
         run_one(57346, date, "init")
         run_two(57345, date, "init")
@@ -32,11 +33,11 @@ def run_two(
 
 
 def _run_pytest(day: int):
-    pytest_output = io.StringIO()
-    sys.stdout = pytest_output
-    result = pytest.main([f"tests\\test_day{day}.py", "--color=yes"])
-    sys.stdout = sys.__stdout__
-    return result, pytest_output.getvalue()
+    r = subprocess.run(
+        ["uv", "run", "pytest", f"tests/test_day{day}.py", "-s", "--color=yes"],
+        capture_output=True, text=True,
+    )
+    return r.returncode, r.stdout
 
 
 def run(
