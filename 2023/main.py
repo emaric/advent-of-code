@@ -7,17 +7,20 @@ import pytest
 
 import aoc_service as a
 
-REPEAT = 100
+REPEAT = 5
 
 
 def main():
-    date = datetime(year=2023, month=12, day=2)
+    date = datetime(year=2023, month=12, day=3)
     if date.day == 1:
         run_one(57346, date, "init")
         run_two(57345, date, "init")
     elif date.day == 2:
         run_one(1734, date, "init")
         run_two(70387, date, "init")
+    elif date.day == 3:
+        run_one(514969, date, "init")
+        run_two(78915902, date, "init")
 
 
 def run_one(
