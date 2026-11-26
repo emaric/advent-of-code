@@ -1,0 +1,16 @@
+[project]
+name = "2026"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "advent-of-code-data>=2.2.0",
+    "pytest>=9.2.0",
+]
+
+[too.ruff]
+fix = true
+unfixable = ["F401"]
+
+ignore = ["F401"]
