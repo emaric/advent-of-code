@@ -51,3 +51,10 @@ def part_two(input: str):
             value = []
 
     return answer
+
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read()
+    print(part_one(data))
+    print(part_two(data))

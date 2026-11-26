@@ -125,3 +125,10 @@ def part_two(input: str):
     dac_to_out = count_paths("dac", "out", devices_dict)
 
     return svr_to_fft * fft_to_dac * dac_to_out
+
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read()
+    print(part_one(data))
+    print(part_two(data))

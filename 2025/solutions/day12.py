@@ -314,3 +314,10 @@ def part_one(input: str):
 
 def part_two(input: str):
     return "-"
+
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read()
+    print(part_one(data))
+    print(part_two(data))

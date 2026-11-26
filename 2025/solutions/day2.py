@@ -73,3 +73,10 @@ def part_two(input):
         first, last = line.strip().split("-")
         answer += sum_n_atleast_twice(first, last)
     return answer
+
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read()
+    print(part_one(data))
+    print(part_two(data))
