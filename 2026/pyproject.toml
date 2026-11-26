@@ -9,6 +9,10 @@ dependencies = [
     "pytest>=9.2.0",
 ]
 
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
 [too.ruff]
 fix = true
 unfixable = ["F401"]
