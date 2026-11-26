@@ -16,8 +16,8 @@ def main():
         run_one(57346, date, "init")
         run_two(57345, date, "init")
     elif date.day == 2:
-        run_one("", date, "init")
-        run_two("", date, "init")
+        run_one(1734, date, "init")
+        run_two(70387, date, "init")
 
 
 def run_one(
