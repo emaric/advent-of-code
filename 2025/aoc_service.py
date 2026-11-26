@@ -114,6 +114,14 @@ def part_one(input: str):
 
 def part_two(input: str):
     return "-"
+
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read().strip()
+    print(part_one(data))
+    print(part_two(data))
+
     """
     if not Path(solution_fpath).exists():
         with open(solution_fpath, mode="w") as f:
