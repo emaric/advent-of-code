@@ -11,7 +11,7 @@ REPEAT = 5
 
 
 def main():
-    date = datetime(year=2023, month=12, day=3)
+    date = datetime(year=2023, month=12, day=4)
     if date.day == 1:
         run_one(57346, date, "init")
         run_two(57345, date, "init")
@@ -21,6 +21,9 @@ def main():
     elif date.day == 3:
         run_one(514969, date, "init")
         run_two(78915902, date, "init")
+    elif date.day == 4:
+        run_one("", date, "init")
+        run_two("", date, "init")
 
 
 def run_one(
