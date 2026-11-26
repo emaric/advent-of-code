@@ -39,3 +39,9 @@ VALUE_MAP = [
 
 def parse_d(d_str):
     return VALUE_MAP.index(d_str) if d_str in VALUE_MAP else int(d_str)
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read()
+    print(part_one(data))
+    print(part_two(data))
