@@ -6,19 +6,18 @@ import pytest
 
 import aoc_service as a
 
-REPEAT = 1 
+REPEAT = 0
 
 
 def main():
-    day = 1
-    date = datetime(year=2026, month=12, day=day)
+    date = datetime(year=2026, month=12, day=1)
     if date.day == 1:
         run_one("", date, "init")
         run_two("", date, "init")
     elif date.day == 2:
         run_one("", date, "init")
         run_two("", date, "init")
-
+    
 
 def run_one(
     expected, date=datetime.now(), comment="", record_run_result=False, repeat=REPEAT

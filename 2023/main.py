@@ -7,7 +7,7 @@ import pytest
 
 import aoc_service as a
 
-REPEAT = 5
+REPEAT = 0
 
 
 def main():
@@ -23,7 +23,6 @@ def main():
         run_two(78915902, date, "init")
     elif date.day == 4:
         run_one("", date, "init")
-        run_two("", date, "init")
 
 
 def run_one(
@@ -38,12 +37,22 @@ def run_two(
     run(2, expected, date, comment, record_run_result, repeat)
 
 
-def _run_pytest(day: int):
-    r = subprocess.run(
-        ["uv", "run", "pytest", f"tests/test_day{day}.py", "-s", "--color=yes"],
-        capture_output=True, text=True,
+def _run_pytest(day: int, part: int, test_fname=None):
+    test_fname = (
+        f"test_day{day}part_{'one' if part == 1 else 'two'}"
+        if test_fname is None
+        else test_fname
     )
-    return r.returncode, r.stdout
+    pytest_output = io.StringIO()
+    result = pytest.main(
+        [
+            f"tests\\test_day{day}.py::{test_fname}",
+            "--color=yes",
+            "--capture=tee-sys",
+        ]
+    )
+    return result, pytest_output.getvalue()
+
 
 
 def run(
@@ -59,12 +68,17 @@ def run(
     a.download(date)
     a.generate_scripts(date)
 
-    result, pytest_output = _run_pytest(day)
+    print(f"Running Example Day {day} Part {part} solution...")
+    result, pytest_output = _run_pytest(day, part)
+    if result == pytest.ExitCode.USAGE_ERROR:
+        result, pytest_output = _run_pytest(day, part, f"test_day{day}example")
+
+    print(pytest_output)
 
     if result == pytest.ExitCode.OK:
         print(f"Running Day {day} Part {part} solution...")
         print("======================================================================")
-        actual, _ = a.run(day, part, 10)
+        actual, _ = a.run(day, part, repeat)
         print("======================================================================")
         print("")
         color = a.PART_ONE_COLOR if part == 1 else a.PART_TWO_COLOR

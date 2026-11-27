@@ -42,12 +42,14 @@ def download(current_date=datetime.now()):
 
         # Download puzzle input
         if not os.path.exists(input_filename):
+            Path(input_filename).parent.mkdir(parents=True, exist_ok=True)
             command = f"aocd {day} {current_date.year} > {input_filename}"
             subprocess.run(command, shell=True, check=True)
             print(f"Downloaded input for day {day}, year {current_date.year}")
 
         # Download example
         if not os.path.exists(example_filename):
+            Path(example_filename).parent.mkdir(parents=True, exist_ok=True)
             command = f"aocd {day} {current_date.year} --example > {example_filename}"
             subprocess.run(command, shell=True, check=True)
             print(f"Downloaded example for day {day}, year {current_date.year}")
@@ -62,6 +64,7 @@ def generate_scripts(date=datetime.now()):
     day = date.day
     test_fn = f"test_day{day}.py"
     test_fpath = f"tests\\{test_fn}"
+    Path(test_fpath).parent.mkdir(parents=True, exist_ok=True)
 
     content = f"""
 from aoc_service import parse_example
@@ -107,6 +110,7 @@ def test_day{day}custom():
 
     # Generate solution script
     solution_fpath = f"solutions\\day{day}.py"
+    Path(solution_fpath).parent.mkdir(parents=True, exist_ok=True)
     solution_content = """
 def part_one(input: str):
     return "-"
@@ -146,7 +150,7 @@ def record_run_result(
         db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
-def run(day: int, part: int, repeat: int = 1):
+def run(day: int, part: int, repeat: int = 0):
     try:
         module = importlib.import_module(f"solutions.day{day}")
         func = getattr(module, "part_one" if part == 1 else "part_two")
@@ -160,7 +164,7 @@ def run(day: int, part: int, repeat: int = 1):
         result_time = end - start
 
         color = PART_ONE_COLOR if part == 1 else PART_TWO_COLOR
-        if repeat > 1:
+        if repeat >= 1:
 
             def to_run():
                 func(input_text)

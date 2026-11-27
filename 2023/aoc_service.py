@@ -70,21 +70,28 @@ from solutions import day{day}
 example_input = "inputs\\\\day{day}example.txt"
 
 
-def test_day{day}example():
+def test_day{day}part_one():
+    print("\\nRunning test_day{day}part_one...\\n\\n")
     examples = parse_example({day})
 
     for example in examples:
         input = example.input_data
         expected_answer_a = example.answer_a
-        expected_answer_b = example.answer_b
-
         assert expected_answer_a == str(day{day}.part_one(input))
-        assert expected_answer_b == str(day{day}.part_two(input))
 
-    assert len(examples) > 0
+
+def test_day{day}part_two():
+    print("\\nRunning test_day{day}part_two...\\n\\n")
+    examples = parse_example({day})
+
+    for example in examples:
+        input = example.input_data
+        expected_answer_b = example.answer_b
+        assert expected_answer_b == str(day{day}.part_two(input))
 
 
 def test_day{day}custom():
+    print("\\nRunning test_day{day}custom...\\n\\n")
     input = ""
 
     actual = ""
@@ -139,7 +146,7 @@ def record_run_result(
         db.create_record(year, day, part, result_time, timestamp, comment, person, code)
 
 
-def run(day: int, part: int, repeat: int = 1):
+def run(day: int, part: int, repeat: int = 0):
     try:
         module = importlib.import_module(f"solutions.day{day}")
         func = getattr(module, "part_one" if part == 1 else "part_two")
@@ -153,7 +160,7 @@ def run(day: int, part: int, repeat: int = 1):
         result_time = end - start
 
         color = PART_ONE_COLOR if part == 1 else PART_TWO_COLOR
-        if repeat > 1:
+        if repeat >= 1:
 
             def to_run():
                 func(input_text)

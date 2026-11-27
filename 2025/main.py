@@ -6,7 +6,7 @@ import pytest
 
 import aoc_service as a
 
-REPEAT = 100
+REPEAT = 0
 
 
 def main():
